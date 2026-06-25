@@ -1,5 +1,8 @@
+"use client";
+
+import { useState, useEffect, useCallback } from "react";
 import { prisma } from "@/lib/prisma";
-import { FileText, Zap, MessageSquare, Clock, TrendingUp } from "lucide-react";
+import { FileText, Zap, MessageSquare, Clock, TrendingUp, RefreshCw, CheckCircle, AlertCircle, Loader2 } from "lucide-react";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
@@ -41,8 +44,13 @@ export default async function HomePage() {
 
   return (
     <div>
-      <h1 className="page-title">Overview</h1>
-      <p className="page-subtitle">Your Performance Brain at a glance</p>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+        <div>
+          <h1 className="page-title">Overview</h1>
+          <p className="page-subtitle">Your Performance Brain at a glance</p>
+        </div>
+        <SyncButton />
+      </div>
 
       <div className="stats-grid">
         <StatCard icon={<FileText className="w-4 h-4" />} label="Total Notes" value={stats.notes} color="blue" />
@@ -121,6 +129,88 @@ export default async function HomePage() {
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+function SyncButton() {
+  const [syncing, setSyncing] = useState(false);
+  const [result, setResult] = useState<{
+    success: boolean;
+    message: string;
+    data?: any;
+  } | null>(null);
+
+  const handleSync = async () => {
+    setSyncing(true);
+    setResult(null);
+    try {
+      const res = await fetch("/api/sync", { method: "POST" });
+      const data = await res.json();
+      if (data.success) {
+        setResult({
+          success: true,
+          message: `Synced: ${data.results.vault.synced} notes, ${data.results.skills.synced} skills, ${data.results.sessions.synced} sessions, ${data.results.cron.synced} jobs`,
+          data: data.results,
+        });
+        // Refresh the page to show new data
+        setTimeout(() => window.location.reload(), 1500);
+      } else {
+        setResult({ success: false, message: "Sync failed" });
+      }
+    } catch (e) {
+      setResult({ success: false, message: String(e) });
+    } finally {
+      setSyncing(false);
+    }
+  };
+
+  return (
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 8 }}>
+      <button
+        onClick={handleSync}
+        disabled={syncing}
+        className="btn btn-primary btn-sm"
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: 6,
+          opacity: syncing ? 0.7 : 1,
+          cursor: syncing ? "not-allowed" : "pointer",
+        }}
+      >
+        {syncing ? (
+          <Loader2 className="w-3 h-3" style={{ animation: "spin 1s linear infinite" }} />
+        ) : (
+          <RefreshCw className="w-3 h-3" />
+        )}
+        {syncing ? "Syncing..." : "Sync Now"}
+      </button>
+      {result && (
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: 6,
+            fontSize: 12,
+            color: result.success ? "var(--green)" : "var(--red)",
+            maxWidth: 300,
+          }}
+        >
+          {result.success ? (
+            <CheckCircle className="w-3 h-3" />
+          ) : (
+            <AlertCircle className="w-3 h-3" />
+          )}
+          <span style={{ textAlign: "right" }}>{result.message}</span>
+        </div>
+      )}
+      <style>{`
+        @keyframes spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+      `}</style>
     </div>
   );
 }
