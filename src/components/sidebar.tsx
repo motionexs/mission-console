@@ -17,10 +17,10 @@ const navItems = [
   { href: "/", label: "Overview", icon: LayoutDashboard },
   { href: "/vault", label: "Vault", icon: FolderOpen },
   { href: "/skills", label: "Skills", icon: Zap },
-  { href: "/sessions", label: "Sessions", icon: MessageSquare },
-  { href: "/articles", label: "Articles", icon: FileText },
-  { href: "/cron", label: "Cron Jobs", icon: Clock },
   { href: "/health", label: "Health", icon: Activity },
+  { href: "/articles", label: "Articles", icon: FileText },
+  { href: "/sessions", label: "Sessions", icon: MessageSquare },
+  { href: "/cron", label: "Cron Jobs", icon: Clock },
 ];
 
 export function Sidebar() {
