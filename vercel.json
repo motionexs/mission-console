@@ -1,0 +1,16 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "nextjs",
+  "buildCommand": "prisma generate && next build",
+  "installCommand": "npm install",
+  "outputDirectory": ".next",
+  "env": {
+    "DATABASE_URL": "file:./data/performance-brain.db"
+  },
+  "crons": [
+    {
+      "path": "/api/sync",
+      "schedule": "*/5 * * * *"
+    }
+  ]
+}
