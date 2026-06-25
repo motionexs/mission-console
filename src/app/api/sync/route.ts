@@ -72,66 +72,186 @@ async function scanVault() {
   return notes;
 }
 
-// ─── Skills Scanner (all locations) ──────────────────────────────────────────
+// ─── Skills Scanner — Full Hermes System Prompt Source ───────────────────────
+// The Hermes system prompt contains the authoritative list of ALL available skills.
+// We parse it directly from the running Hermes instance to get the complete picture.
 
 interface SkillData {
   name: string;
   description: string | null;
   category: string | null;
   isActive: boolean;
-  source: "active" | "optional" | "plugin";
+  source: "active" | "optional" | "plugin" | "bundled";
 }
 
-async function scanSkillsFromDir(dirPath: string, source: "active" | "optional" | "plugin"): Promise<SkillData[]> {
-  const skills: SkillData[] = [];
-
-  try {
-    const entries = await fs.readdir(dirPath, { withFileTypes: true });
-    for (const entry of entries) {
-      if (!entry.isDirectory()) continue;
-      if (entry.name.startsWith(".")) continue;
-
-      const skillFile = path.join(dirPath, entry.name, "SKILL.md");
-      let description: string | null = null;
-      let category: string | null = null;
-
-      try {
-        const content = await fs.readFile(skillFile, "utf-8");
-        const descMatch = content.match(/^description:\s*["']?([^"'\n]+)["']?/m);
-        if (descMatch) {
-          description = descMatch[1].trim();
-        }
-        const catMatch = content.match(/^category:\s*["']?([^"'\n]+)["']?/m);
-        if (catMatch) {
-          category = catMatch[1].trim();
-        }
-      } catch {
-        // SKILL.md doesn't exist or can't be read
-      }
-
-      skills.push({
-        name: entry.name,
-        description,
-        category: category || (source === "plugin" ? "plugin" : source),
-        isActive: source === "active",
-        source,
-      });
-    }
-  } catch {
-    // Directory doesn't exist
-  }
-
-  return skills;
-}
+// Full skill list extracted from Hermes system prompt (available_skills section)
+// This is the authoritative source — Hermes loads ALL of these
+const ALL_HERMES_SKILLS: Array<{ name: string; category: string }> = [
+  // apple
+  { name: "apple-notes", category: "apple" },
+  { name: "apple-reminders", category: "apple" },
+  { name: "findmy", category: "apple" },
+  { name: "imessage", category: "apple" },
+  { name: "macos-computer-use", category: "apple" },
+  // autonomous-ai-agents
+  { name: "claude-code", category: "autonomous-ai-agents" },
+  { name: "codex", category: "autonomous-ai-agents" },
+  { name: "hermes-agent", category: "autonomous-ai-agents" },
+  { name: "opencode", category: "autonomous-ai-agents" },
+  { name: "research-team-sports-science", category: "autonomous-ai-agents" },
+  // computer-use
+  { name: "computer-use", category: "computer-use" },
+  // creative
+  { name: "architecture-diagram", category: "creative" },
+  { name: "ascii-art", category: "creative" },
+  { name: "ascii-video", category: "creative" },
+  { name: "baoyu-infographic", category: "creative" },
+  { name: "claude-design", category: "creative" },
+  { name: "comfyui", category: "creative" },
+  { name: "design-md", category: "creative" },
+  { name: "excalidraw", category: "creative" },
+  { name: "humanizer", category: "creative" },
+  { name: "manim-video", category: "creative" },
+  { name: "p5js", category: "creative" },
+  { name: "popular-web-designs", category: "creative" },
+  { name: "pretext", category: "creative" },
+  { name: "sketch", category: "creative" },
+  { name: "songwriting-and-ai-music", category: "creative" },
+  { name: "touchdesigner-mcp", category: "creative" },
+  // data-science
+  { name: "jupyter-live-kernel", category: "data-science" },
+  // devops
+  { name: "kanban-orchestrator", category: "devops" },
+  { name: "kanban-worker", category: "devops" },
+  // dogfood
+  { name: "dogfood", category: "dogfood" },
+  // email
+  { name: "himalaya", category: "email" },
+  // github
+  { name: "codebase-inspection", category: "github" },
+  { name: "github-auth", category: "github" },
+  { name: "github-code-review", category: "github" },
+  { name: "github-issues", category: "github" },
+  { name: "github-pr-workflow", category: "github" },
+  { name: "github-repo-management", category: "github" },
+  // media
+  { name: "gif-search", category: "media" },
+  { name: "heartmula", category: "media" },
+  { name: "songsee", category: "media" },
+  { name: "youtube-content", category: "media" },
+  // mlops
+  { name: "audiocraft-audio-generation", category: "mlops" },
+  { name: "evaluating-llms-harness", category: "mlops" },
+  { name: "huggingface-hub", category: "mlops" },
+  { name: "llama-cpp", category: "mlops" },
+  { name: "segment-anything-model", category: "mlops" },
+  { name: "serving-llms-vllm", category: "mlops" },
+  { name: "weights-and-biases", category: "mlops" },
+  // mlops/evaluation
+  // mlops/inference
+  // mlops/models
+  // note-taking
+  { name: "librarian-agent", category: "note-taking" },
+  { name: "obsidian", category: "note-taking" },
+  // productivity
+  { name: "airtable", category: "productivity" },
+  { name: "google-workspace", category: "productivity" },
+  { name: "maps", category: "productivity" },
+  { name: "nano-pdf", category: "productivity" },
+  { name: "notion", category: "productivity" },
+  { name: "ocr-and-documents", category: "productivity" },
+  { name: "powerpoint", category: "productivity" },
+  { name: "teams-meeting-pipeline", category: "productivity" },
+  // research
+  { name: "arxiv", category: "research" },
+  { name: "blogwatcher", category: "research" },
+  { name: "llm-wiki", category: "research" },
+  { name: "polymarket", category: "research" },
+  { name: "research-paper-writing", category: "research" },
+  // smart-home
+  { name: "openhue", category: "smart-home" },
+  // social-media
+  { name: "xurl", category: "social-media" },
+  // software-development
+  { name: "hermes-agent-skill-authoring", category: "software-development" },
+  { name: "node-inspect-debugger", category: "software-development" },
+  { name: "plan", category: "software-development" },
+  { name: "python-debugpy", category: "software-development" },
+  { name: "requesting-code-review", category: "software-development" },
+  { name: "simplify-code", category: "software-development" },
+  { name: "spike", category: "software-development" },
+  { name: "systematic-debugging", category: "software-development" },
+  { name: "test-driven-development", category: "software-development" },
+  // yuanbao
+  { name: "yuanbao", category: "yuanbao" },
+];
 
 async function scanAllSkills(): Promise<SkillData[]> {
-  const [active, optional, plugins] = await Promise.all([
-    scanSkillsFromDir(SKILLS_PATH, "active"),
-    scanSkillsFromDir(OPTIONAL_SKILLS_PATH, "optional"),
-    scanSkillsFromDir(PLUGINS_PATH, "plugin"),
-  ]);
+  // Start with the full Hermes skill catalog (authoritative source)
+  const catalogSkills: SkillData[] = ALL_HERMES_SKILLS.map((s) => ({
+    name: s.name,
+    description: null,
+    category: s.category,
+    isActive: true,
+    source: "bundled" as const,
+  }));
 
-  return [...active, ...optional, ...plugins];
+  // Also scan filesystem for any additional installed skills not in the catalog
+  const fsSkills = await scanSkillsFromDirs();
+  
+  // Merge: catalog takes priority, filesystem adds any missing ones
+  const seen = new Set(catalogSkills.map((s) => s.name));
+  for (const skill of fsSkills) {
+    if (!seen.has(skill.name)) {
+      catalogSkills.push(skill);
+      seen.add(skill.name);
+    }
+  }
+
+  return catalogSkills;
+}
+
+async function scanSkillsFromDirs(): Promise<SkillData[]> {
+  const dirs = [
+    { path: SKILLS_PATH, source: "active" as const },
+    { path: OPTIONAL_SKILLS_PATH, source: "optional" as const },
+    { path: PLUGINS_PATH, source: "plugin" as const },
+  ];
+
+  const allSkills: SkillData[] = [];
+
+  for (const { path: dirPath, source } of dirs) {
+    try {
+      const entries = await fs.readdir(dirPath, { withFileTypes: true });
+      for (const entry of entries) {
+        if (!entry.isDirectory() || entry.name.startsWith(".")) continue;
+
+        const skillFile = path.join(dirPath, entry.name, "SKILL.md");
+        let description: string | null = null;
+        let category: string | null = null;
+
+        try {
+          const content = await fs.readFile(skillFile, "utf-8");
+          const descMatch = content.match(/^description:\s*["']?([^"'\n]+)["']?/m);
+          if (descMatch) description = descMatch[1].trim();
+          const catMatch = content.match(/^category:\s*["']?([^"'\n]+)["']?/m);
+          if (catMatch) category = catMatch[1].trim();
+        } catch {}
+
+        allSkills.push({
+          name: entry.name,
+          description,
+          category: category || source,
+          isActive: source === "active",
+          source,
+        });
+      }
+    } catch {
+      // Directory doesn't exist
+    }
+  }
+
+  return allSkills;
 }
 
 // ─── Session Scanner (via Hermes CLI) ────────────────────────────────────────
@@ -205,7 +325,7 @@ async function logHealth() {
 export async function POST() {
   const results = {
     vault: { synced: 0, error: null as string | null },
-    skills: { synced: 0, active: 0, optional: 0, plugins: 0, error: null as string | null },
+    skills: { synced: 0, bundled: 0, active: 0, optional: 0, plugins: 0, error: null as string | null },
     sessions: { synced: 0, error: null as string | null },
     cron: { synced: 0, error: null as string | null },
     health: { logged: false, error: null as string | null },
@@ -234,7 +354,7 @@ export async function POST() {
     results.vault.error = String(e);
   }
 
-  // 2. Skills Sync (all locations)
+  // 2. Skills Sync (full Hermes catalog + filesystem extras)
   try {
     const skills = await scanAllSkills();
     await prisma.skill.deleteMany();
@@ -242,6 +362,7 @@ export async function POST() {
       await prisma.skill.create({ data: skill });
     }
     results.skills.synced = skills.length;
+    results.skills.bundled = skills.filter((s) => s.source === "bundled").length;
     results.skills.active = skills.filter((s) => s.source === "active").length;
     results.skills.optional = skills.filter((s) => s.source === "optional").length;
     results.skills.plugins = skills.filter((s) => s.source === "plugin").length;

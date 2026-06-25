@@ -32,7 +32,7 @@ model Skill {
   description String?
   category    String?
   isActive    Boolean  @default(true)
-  source      String   @default("active") // active | optional | plugin
+  source      String   @default("active") // active | optional | plugin | bundled
   lastUsed    DateTime?
   createdAt   DateTime @default(now())
 

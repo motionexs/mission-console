@@ -13,9 +13,10 @@ async function getSkills() {
 }
 
 const sourceConfig: Record<string, { label: string; color: string; icon: React.ReactNode }> = {
-  active: { label: "Active", color: "var(--green)", icon: <Zap className="w-3 h-3" /> },
+  bundled: { label: "Bundled", color: "var(--accent)", icon: <Zap className="w-3 h-3" /> },
+  active: { label: "Active", color: "var(--green)", icon: <Package className="w-3 h-3" /> },
   optional: { label: "Optional", color: "var(--amber)", icon: <Package className="w-3 h-3" /> },
-  plugin: { label: "Plugin", color: "var(--accent)", icon: <Puzzle className="w-3 h-3" /> },
+  plugin: { label: "Plugin", color: "var(--orange)", icon: <Puzzle className="w-3 h-3" /> },
 };
 
 export default async function SkillsPage() {
