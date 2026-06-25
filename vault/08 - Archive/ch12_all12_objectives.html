@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chapter 12 – All 12 Objectives | Helping the Injured Athlete</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=Fira+Mono:wght@500&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0D1B2A;--ink:#1A2B3C;--white:#FFFFFF;--panel:#F7F8FA;
+  --blue:#1B6EF3;--blue-l:#E3EEFF;--blue-d:#0C44A5;
+  --teal:#0C9E80;--teal-l:#D4F3EB;--teal-d:#065A42;
+  --coral:#E04B2C;--coral-l:#FDECE8;
+  --purple:#6B3FC8;--purple-l:#EDE6FF;--purple-d:#3D1C9E;
+  --amber:#D07A00;--amber-l:#FEF3DA;
+  --red:#C62828;--red-l:#FDECEC;
+  --green:#1A7F3C;--green-l:#E8F7ED;
+  --pink:#B5006B;--pink-l:#FFE3F3;
+  --slate:#4A5568;--muted:#718096;--border:#E2E8F0;
+}
+body{font-family:'Inter',sans-serif;background:#ECEEF2;color:var(--navy);font-size:12.5px;line-height:1.55;padding:20px}
+
+/* ── HEADER ── */
+.page-header{background:var(--navy);color:white;border-radius:16px;padding:26px 36px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between}
+.page-header h1{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:2px;line-height:1;color:white}
+.page-header .sub{font-size:12px;color:#94A3B8;margin-top:6px}
+.ch-badge{background:var(--blue);color:white;font-family:'Bebas Neue',sans-serif;font-size:56px;width:96px;height:96px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1;flex-shrink:0}
+.ch-badge span{font-size:12px;letter-spacing:2px}
+
+/* ── OBJ INDEX ROW ── */
+.obj-index{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px;background:white;border-radius:12px;padding:12px 16px;border:1px solid var(--border)}
+.obj-idx-pill{display:flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;font-size:11px;font-weight:700;cursor:default}
+
+/* ── SECTION ── */
+.section{background:white;border-radius:14px;padding:20px 24px;margin-bottom:14px;border:1px solid var(--border);page-break-inside:avoid}
+.sec-header{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.sec-num{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;color:white}
+.sec-title{font-family:'Bebas Neue',sans-serif;font-size:20px;letter-spacing:1.5px}
+.obj-tag{display:inline-block;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;padding:2px 8px;border-radius:20px;margin-bottom:8px}
+
+/* ── GRIDS ── */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.g4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px}
+
+/* ── CARDS ── */
+.card{border-radius:10px;padding:12px 14px;border:1px solid var(--border)}
+.card h4{font-size:11px;font-weight:700;letter-spacing:.5px;margin-bottom:5px}
+.card ul{padding-left:13px}.card ul li{margin-bottom:2px;font-size:11px}
+
+/* ── PILL ── */
+.pill{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;margin:2px 2px 2px 0}
+
+/* ── TABLE ── */
+.react-table{width:100%;border-collapse:collapse}
+.react-table th{font-size:10.5px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:9px 12px;text-align:left}
+.react-table td{padding:9px 12px;font-size:11px;border-top:1px solid var(--border);vertical-align:top}
+
+/* ── INJURY TYPE ── */
+.inj-type{border-radius:8px;padding:10px 12px;text-align:center;border-top:3px solid}
+.inj-type .label{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:1px}
+
+/* ── KR STAGES ── */
+.kr-stage{display:flex;align-items:flex-start;gap:9px;margin-bottom:6px;background:var(--panel);border-radius:8px;padding:8px 10px;border:1px solid var(--border)}
+.kr-num{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px}
+
+/* ── BPS TRIAD ── */
+.bps-col{flex:1;background:white;border-radius:8px;padding:9px;border:1px solid var(--border)}
+.bps-col h5{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:5px}
+.bps-col ul{padding-left:12px}.bps-col ul li{font-size:11px;margin-bottom:2px}
+
+/* ── FLOW ── */
+.flow-box{background:white;border:1px solid rgba(0,0,0,.12);border-radius:7px;padding:5px 9px;font-size:10.5px;font-weight:600;text-align:center;flex-shrink:0}
+.arrow-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:5px 0}
+
+/* ── GOAL CARD ── */
+.goal-item{display:flex;gap:8px;align-items:flex-start;padding:7px 10px;border-radius:8px;margin-bottom:5px;background:var(--panel);border:1px solid var(--border)}
+.goal-num{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;color:white}
+
+/* ── SUPPORT BOX ── */
+.sup-item{display:flex;gap:8px;align-items:flex-start;padding:7px 10px;border-radius:8px;margin-bottom:5px;border-left:3px solid}
+.sup-icon{font-size:15px;flex-shrink:0;margin-top:1px}
+
+/* ── SKILL CARD ── */
+.skill-card{border-radius:10px;padding:14px;border:1px solid var(--border)}
+.skill-card h4{font-size:12px;font-weight:700;margin-bottom:6px}
+.skill-card p,.skill-card li{font-size:11px;color:var(--slate)}
+.skill-card ul{padding-left:13px}
+.skill-card ul li{margin-bottom:2px}
+
+/* ── DISORDER ── */
+.disorder{border-radius:10px;padding:12px 14px;border-left:4px solid;margin-bottom:8px}
+.disorder h4{font-size:11px;font-weight:700;margin-bottom:4px}
+.disorder p,.disorder li{font-size:11px;color:var(--slate)}
+.disorder ul{padding-left:13px}
+.disorder ul li{margin-bottom:2px}
+
+/* ── CHAIN ── */
+.chain{display:flex;align-items:flex-start;gap:8px;padding:12px;background:var(--amber-l);border-radius:10px;border:1px solid #FAC775;flex-wrap:wrap}
+.chain-box{flex:1;min-width:110px;background:white;border:1.5px solid var(--amber);border-radius:8px;padding:9px 12px;text-align:center}
+.chain-box h5{font-size:11px;font-weight:700;color:var(--amber)}
+.chain-box ul{padding-left:12px;text-align:left;margin-top:4px}
+.chain-box ul li{font-size:10px;color:var(--slate);margin-bottom:2px}
+.chain-arrow{font-size:22px;color:var(--amber);flex-shrink:0;padding-top:20px}
+
+/* ── PROF DIFF TABLE ── */
+.prof-table{width:100%;border-collapse:collapse;border-radius:10px;overflow:hidden}
+.prof-table th{background:var(--navy);color:white;font-size:11px;font-weight:700;padding:9px 14px;text-align:left;letter-spacing:.5px}
+.prof-table td{padding:9px 14px;font-size:11px;border-top:1px solid var(--border);vertical-align:top}
+.prof-table tr:nth-child(even) td{background:var(--panel)}
+
+/* ── STRESS CHAIN ── */
+.stress-chain{display:flex;align-items:center;gap:6px;flex-wrap:wrap;padding:12px 16px;background:#FFF8EE;border-radius:10px;border:1px solid #FAC775}
+.sc-box{flex:1;min-width:100px;background:white;border-radius:8px;padding:8px 10px;text-align:center;border:1.5px solid var(--amber)}
+.sc-box h5{font-size:10.5px;font-weight:700;color:var(--amber)}
+.sc-box p{font-size:10px;color:var(--slate);margin-top:2px}
+.sc-arrow{font-size:20px;color:var(--amber);flex-shrink:0}
+.sc-end{background:var(--red);border-color:var(--red)}
+.sc-end h5{color:white}.sc-end p{color:#FECACA}
+
+@media print{
+  body{background:white;padding:8px;font-size:11px}
+  .section{margin-bottom:8px;page-break-inside:avoid}
+  .page-header{padding:16px 22px}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══ -->
+<div class="page-header">
+  <div>
+    <div style="font-size:10px;font-weight:700;letter-spacing:2px;color:#60A5FA;text-transform:uppercase;margin-bottom:5px;">Sport &amp; Exercise Psychology · Complete Study Reference</div>
+    <h1>Helping the Injured<br>Athlete Psychologically</h1>
+    <div class="sub">ALL 12 OBJECTIVES · Prentice – Essentials of Athletic Injury Management, 12th Ed. (2023)</div>
+  </div>
+  <div style="text-align:center">
+    <div class="ch-badge"><span>CH</span>12</div>
+    <div style="color:#94A3B8;font-size:10px;margin-top:6px;">12 of 12 objectives</div>
+  </div>
+</div>
+
+<!-- Objective Index -->
+<div class="obj-index">
+  <div style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;width:100%;margin-bottom:6px;">Objectives at a Glance</div>
+  <div class="obj-idx-pill" style="background:var(--blue-l);color:var(--blue-d);">1 · Psychological Response</div>
+  <div class="obj-idx-pill" style="background:var(--amber-l);color:#7a4800;">2 · Progressive Reactions</div>
+  <div class="obj-idx-pill" style="background:var(--red-l);color:#7a0000;">3 · Predictors of Injury</div>
+  <div class="obj-idx-pill" style="background:#FFF8EE;color:#7a4800;">4 · Stressors</div>
+  <div class="obj-idx-pill" style="background:var(--teal-l);color:var(--teal-d);">5 · Buffers</div>
+  <div class="obj-idx-pill" style="background:var(--purple-l);color:var(--purple-d);">6 · Goal Setting</div>
+  <div class="obj-idx-pill" style="background:var(--green-l);color:#0a5028;">7 · Managing Impact</div>
+  <div class="obj-idx-pill" style="background:#FFF0F8;color:var(--pink);">8 · Return to Competition</div>
+  <div class="obj-idx-pill" style="background:var(--blue-l);color:var(--blue-d);">9 · Social Support</div>
+  <div class="obj-idx-pill" style="background:#F0F0F0;color:#333;">10 · Counsellor / Psych / Psychiatrist</div>
+  <div class="obj-idx-pill" style="background:var(--teal-l);color:var(--teal-d);">11 · Skills Training Techniques</div>
+  <div class="obj-idx-pill" style="background:var(--red-l);color:#7a0000;">12 · Mental Disorders</div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     OBJ 1 – PSYCHOLOGICAL RESPONSE
+═══════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="obj-tag" style="background:var(--blue-l);color:var(--blue-d);">● OBJECTIVE 1</div>
+  <div class="sec-header">
+    <div class="sec-num" style="background:var(--blue);">1</div>
+    <div class="sec-title">How Athletes Respond Psychologically to Injury</div>
+  </div>
+
+  <div class="g2" style="margin-bottom:12px">
+    <div>
+      <div style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:7px;">How an Athlete May Perceive Injury</div>
+      <div style="border-left:3px solid var(--red);background:var(--red-l);border-radius:0 8px 8px 0;padding:7px 10px;margin-bottom:5px"><strong style="color:var(--red);font-size:11px;">⚡ Disastrous</strong><div style="font-size:11px;color:var(--slate);">Catastrophic setback to athletic identity and career trajectory.</div></div>
+      <div style="border-left:3px solid var(--teal);background:var(--teal-l);border-radius:0 8px 8px 0;padding:7px 10px;margin-bottom:5px"><strong style="color:var(--teal-d);font-size:11px;">🏅 Opportunity for Courage</strong><div style="font-size:11px;color:var(--slate);">A chance to demonstrate mental toughness and resilience.</div></div>
+      <div style="border-left:3px solid var(--amber);background:var(--amber-l);border-radius:0 8px 8px 0;padding:7px 10px;margin-bottom:5px"><strong style="color:#8a5000;font-size:11px;">🛡 Excuse for Poor Performance</strong><div style="font-size:11px;color:var(--slate);">Deflects blame for underperformance existing prior to the injury.</div></div>
+      <div style="border-left:3px solid var(--purple);background:var(--purple-l);border-radius:0 8px 8px 0;padding:7px 10px;margin-bottom:5px"><strong style="color:var(--purple-d);font-size:11px;">🚪 Escape from a Losing Team</strong><div style="font-size:11px;color:var(--slate);">Relief from a toxic team culture or underperforming environment.</div></div>
+      <div style="border-left:3px solid var(--blue);background:var(--blue-l);border-radius:0 8px 8px 0;padding:7px 10px"><strong style="color:var(--blue-d);font-size:11px;">👨‍👩‍👦 Escape from a Domineering Parent</strong><div style="font-size:11px;color:var(--slate);">Relief from excessive parental pressure and unrealistic expectations.</div></div>
+    </div>
+    <div>
+      <div style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:7px;">Key Influencing Factors</div>
+      <div style="background:var(--blue-l);border-radius:9px;padding:11px 13px;margin-bottom:10px">
+        <div style="font-size:11px;color:var(--blue-d);font-style:italic;margin-bottom:7px;">"Individual reactions are shaped by four core factors:"</div>
+        <div>
+          <span class="pill" style="background:var(--blue);color:white;">Past History of Injury</span>
+          <span class="pill" style="background:var(--blue);color:white;">Coping Skills</span>
+          <span class="pill" style="background:var(--blue);color:white;">Social Support</span>
+          <span class="pill" style="background:var(--blue);color:white;">Personality Traits</span>
+        </div>
+        <div style="font-size:11px;color:var(--blue-d);margin-top:7px">⚠ Athletes should be aware of possible <strong>self-esteem issues</strong> during extended rehab</div>
+      </div>
+      <div style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:7px;">Injury Severity Classification</div>
+      <div class="g4">
+        <div class="inj-type" style="background:var(--blue-l);border-top-color:var(--blue)"><div class="label" style="color:var(--blue-d)">Short-term</div><div style="font-family:'Fira Mono',monospace;font-size:10px;color:var(--blue-d)">&lt;4 wks</div></div>
+        <div class="inj-type" style="background:var(--amber-l);border-top-color:var(--amber)"><div class="label" style="color:#8a5000">Long-term</div><div style="font-family:'Fira Mono',monospace;font-size:10px;color:#8a5000">&gt;4 wks</div></div>
+        <div class="inj-type" style="background:var(--purple-l);border-top-color:var(--purple)"><div class="label" style="color:var(--purple-d)">Chronic</div><div style="font-family:'Fira Mono',monospace;font-size:10px;color:var(--purple-d)">Recurring</div></div>
+        <div class="inj-type" style="background:var(--red-l);border-top-color:var(--red)"><div class="label" style="color:#8B0000">Terminating</div><div style="font-family:'Fira Mono',monospace;font-size:10px;color:#8B0000">Career-end</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3 Phases bar -->
+  <div style="background:var(--navy);border-radius:10px;padding:12px 16px">
+    <div style="font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#94A3B8;margin-bottom:9px">Three Reactive Phases of the Injury Process</div>
+    <div style="display:flex;gap:8px">
+      <div style="flex:1;background:rgba(255,255,255,.08);border-radius:8px;padding:9px 12px"><div style="font-size:9px;font-weight:700;color:#60A5FA;text-transform:uppercase;letter-spacing:1px;margin-bottom:3px">Phase 1</div><div style="font-size:12px;font-weight:600;color:white">Reaction to Injury</div><div style="font-size:10.5px;color:#94A3B8;margin-top:3px">Initial emotional/psychological response at moment of injury</div></div>
+      <div style="display:flex;align-items:center;color:#475569;font-size:20px">›</div>
+      <div style="flex:1;background:rgba(255,255,255,.08);border-radius:8px;padding:9px 12px"><div style="font-size:9px;font-weight:700;color:#34D399;text-transform:uppercase;letter-spacing:1px;margin-bottom:3px">Phase 2</div><div style="font-size:12px;font-weight:600;color:white">Reaction to Rehabilitation</div><div style="font-size:10.5px;color:#94A3B8;margin-top:3px">Emotions during treatment and recovery; compliance challenges</div></div>
+      <div style="display:flex;align-items:center;color:#475569;font-size:20px">›</div>
+      <div style="flex:1;background:rgba(255,255,255,.08);border-radius:8px;padding:9px 12px"><div style="font-size:9px;font-weight:700;color:#FB923C;text-transform:uppercase;letter-spacing:1px;margin-bottom:3px">Phase 3</div><div style="font-size:12px;font-weight:600;color:white">Reaction to Return / Termination</div><div style="font-size:10.5px;color:#94A3B8;margin-top:3px">Psychological adjustment to returning to play or career end</div></div>
+    </div>
+  </div>
+
+  <!-- 3 Models -->
+  <div style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin:14px 0 8px">Three Models of Psychological Response</div>
+  <div class="g3">
+    <!-- Integrated -->
+    <div style="background:var(--blue-l);border:1px solid #b3d0fd;border-radius:11px;padding:14px">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:1px;color:var(--blue-d);margin-bottom:6px">Integrated Model</div>
+      <div style="font-size:11px;color:#2d4f8a;margin-bottom:8px">Focuses on athlete's <strong>interpretation</strong> of injury rather than actual severity. Personal + situational factors drive cognitive appraisal → emotional &amp; behavioral response.</div>
+      <div class="arrow-row">
+        <div class="flow-box" style="background:var(--blue);color:white;font-size:10px;border:none">Personal Factors</div>
+        <div style="color:var(--blue-d);font-size:14px">+</div>
+        <div class="flow-box" style="background:var(--blue);color:white;font-size:10px;border:none">Situational Factors</div>
+      </div>
+      <div style="text-align:center;font-size:16px;color:var(--blue-d)">↓</div>
+      <div class="arrow-row" style="justify-content:center">
+        <div class="flow-box" style="border:2px solid var(--blue);font-size:10px">Cognitive Appraisal</div>
+      </div>
+      <div style="text-align:center;font-size:16px;color:var(--blue-d)">↓</div>
+      <div class="arrow-row">
+        <div class="flow-box" style="font-size:10px">Cognitive</div>
+        <div class="flow-box" style="font-size:10px">Emotional</div>
+        <div class="flow-box" style="font-size:10px">Behavioral</div>
+      </div>
+      <div style="font-size:10px;font-weight:700;color:var(--blue-d);text-transform:uppercase;letter-spacing:.8px;margin:7px 0 4px">Moderating Factors</div>
+      <div>
+        <span class="pill" style="background:#C7DDFB;color:var(--blue-d);font-size:10px">Coping Skills</span>
+        <span class="pill" style="background:#C7DDFB;color:var(--blue-d);font-size:10px">Injury History</span>
+        <span class="pill" style="background:#C7DDFB;color:var(--blue-d);font-size:10px">Social Support</span>
+        <span class="pill" style="background:#C7DDFB;color:var(--blue-d);font-size:10px">Personality</span>
+      </div>
+    </div>
+
+    <!-- Biopsychosocial -->
+    <div style="background:var(--teal-l);border:1px solid #9FE1CB;border-radius:11px;padding:14px">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:1px;color:var(--teal-d);margin-bottom:6px">Biopsychosocial Model</div>
+      <div style="font-size:11px;color:#0a4a39;margin-bottom:8px">Response to injury involves an interplay of <strong>three domains</strong> — no single factor explains the full picture.</div>
+      <div style="display:flex;gap:6px;margin-top:4px">
+        <div class="bps-col" style="border-top:3px solid var(--red)"><h5 style="color:var(--red)">BIOLOGICAL</h5><ul><li>Genetics</li><li>Pathogens</li><li>Physical health</li><li>Organ function</li></ul></div>
+        <div class="bps-col" style="border-top:3px solid var(--blue)"><h5 style="color:var(--blue-d)">PSYCHOLOGICAL</h5><ul><li>Thoughts</li><li>Emotions</li><li>Coping skills</li><li>Behaviours</li></ul></div>
+        <div class="bps-col" style="border-top:3px solid var(--purple)"><h5 style="color:var(--purple-d)">SOCIAL</h5><ul><li>Social support</li><li>Socioeconomic status</li><li>Culture</li><li>Family circumstances</li></ul></div>
+      </div>
+      <div style="background:white;border-radius:7px;padding:7px 9px;margin-top:7px;border:1px solid rgba(0,0,0,.1)"><div style="font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;margin-bottom:2px">Key Principle</div><div style="font-size:11px;color:var(--slate)">All three domains interact simultaneously — treating only the physical ignores psychological and social recovery needs.</div></div>
+    </div>
+
+    <!-- Kübler-Ross -->
+    <div style="background:var(--purple-l);border:1px solid #C9B8F5;border-radius:11px;padding:14px">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:1px;color:var(--purple-d);margin-bottom:6px">Kübler-Ross Model</div>
+      <div style="font-size:11px;color:#4a2fa0;margin-bottom:8px">Based on classic <strong>5 stages of grief</strong>. Athletes may experience any/all — order is NOT fixed. Used throughout rehabilitation process.</div>
+      <div class="kr-stage"><div class="kr-num" style="background:#E24B4A;color:white">1</div><div><div style="font-size:11px;font-weight:700;color:var(--red)">Denial</div><div style="font-size:10.5px;font-style:italic;color:var(--muted)">"This isn't happening to me"</div><div style="font-size:10.5px;color:var(--slate)">Initial shock or disbelief</div></div></div>
+      <div class="kr-stage"><div class="kr-num" style="background:#F97316;color:white">2</div><div><div style="font-size:11px;font-weight:700;color:#C2410C">Anger</div><div style="font-size:10.5px;font-style:italic;color:var(--muted)">"Why me?"</div><div style="font-size:10.5px;color:var(--slate)">Directed at self, others, or a higher power</div></div></div>
+      <div class="kr-stage"><div class="kr-num" style="background:var(--amber);color:white">3</div><div><div style="font-size:11px;font-weight:700;color:#924F00">Bargaining</div><div style="font-size:10.5px;font-style:italic;color:var(--muted)">"Just let me play one more season…"</div><div style="font-size:10.5px;color:var(--slate)">Negotiating to postpone the inevitable</div></div></div>
+      <div class="kr-stage"><div class="kr-num" style="background:var(--purple);color:white">4</div><div><div style="font-size:11px;font-weight:700;color:var(--purple-d)">Depression</div><div style="font-size:10.5px;font-style:italic;color:var(--muted)">Deep sadness; realization of loss</div><div style="font-size:10.5px;color:var(--slate)">May impact social functioning &amp; motivation</div></div></div>
+      <div class="kr-stage" style="border:1px solid var(--teal)"><div class="kr-num" style="background:var(--teal);color:white">5</div><div><div style="font-size:11px;font-weight:700;color:var(--teal-d)">Acceptance</div><div style="font-size:10.5px;font-style:italic;color:var(--muted)">Peace with reality — ready to move forward</div><div style="font-size:10.5px;color:var(--slate)">Goal of the rehabilitation process</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     OBJ 2 – PROGRESSIVE REACTIONS TABLE
+═══════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="obj-tag" style="background:var(--amber-l);color:#7a4800;">● OBJECTIVE 2</div>
+  <div class="sec-header">
+    <div class="sec-num" style="background:var(--amber)">2</div>
+    <div class="sec-title">Progressive Reactions Based on Severity &amp; Rehab Length (TABLE 12–1)</div>
+  </div>
+  <div style="font-size:11px;color:var(--muted);margin-bottom:10px">Athletes may experience any or all reactions within each phase. Reactions are progressive, not guaranteed.</div>
+  <table class="react-table">
+    <thead><tr style="background:var(--navy)">
+      <th style="color:#94A3B8;width:16%">Severity / Length</th>
+      <th style="color:#60A5FA">⚡ Reaction to Injury</th>
+      <th style="color:#34D399">🔄 Reaction to Rehabilitation</th>
+      <th style="color:#FB923C">🏁 Reaction to Return / Outcome</th>
+    </tr></thead>
+    <tbody>
+      <tr style="background:#EEF5FF">
+        <td><div style="font-weight:700;color:var(--blue);font-size:11.5px">SHORT-TERM</div><div style="font-family:'Fira Mono',monospace;font-size:10px;color:var(--muted)">&lt; 4 weeks</div></td>
+        <td><span class="pill" style="background:var(--blue);color:white">Shock</span><span class="pill" style="background:var(--blue-l);color:var(--blue-d)">Optimism</span><div style="font-size:10.5px;color:var(--slate);margin-top:4px">Initial disbelief quickly replaced by a hopeful outlook — short recovery timeline reduces distress.</div></td>
+        <td><span class="pill" style="background:#DCFCE7;color:#166534">Relief</span><span class="pill" style="background:#DCFCE7;color:#166534">Eagerness</span><div style="font-size:10.5px;color:var(--slate);margin-top:4px">Motivated to push through short rehab; relief that injury isn't more serious.</div></td>
+        <td><span class="pill" style="background:#FFF3CD;color:#7a4800">Impatience</span><span class="pill" style="background:#FFF3CD;color:#7a4800">Anticipation</span><div style="font-size:10.5px;color:var(--slate);margin-top:4px">Eager to return — may rush recovery and risk reinjury.</div></td>
+      </tr>
+      <tr style="background:#FEF9EC">
+        <td><div style="font-weight:700;color:var(--amber);font-size:11.5px">LONG-TERM</div><div style="font-family:'Fira Mono',monospace;font-size:10px;color:var(--muted)">&gt; 4 weeks</div></td>
+        <td><span class="pill" style="background:var(--red-l);color:var(--red)">Fear</span><span class="pill" style="background:var(--red-l);color:var(--red)">Anger</span><span class="pill" style="background:var(--amber-l);color:#8a5000">Loss of Vigor</span><span class="pill" style="background:var(--amber-l);color:#8a5000">Irrational Thoughts</span><div style="font-size:10.5px;color:var(--slate);margin-top:4px">Significant emotional distress; sense of loss as absence from sport lengthens.</div></td>
+        <td><span class="pill" style="background:var(--purple-l);color:var(--purple-d)">Alienation</span><div style="font-size:10.5px;color:var(--slate);margin-top:4px">Feels cut off from team. Social identity threatened. Needs active inclusion strategies from coaching staff.</div></td>
+        <td><span class="pill" style="background:var(--teal-l);color:var(--teal-d)">Acknowledgment</span><div style="font-size:10.5px;color:var(--slate);margin-top:4px">Comes to terms with the length of injury; begins to accept the rehabilitation journey ahead.</div></td>
+      </tr>
+      <tr style="background:#F5F0FF">
+        <td><div style="font-weight:700;color:var(--purple);font-size:11.5px">CHRONIC</div><div style="font-family:'Fira Mono',monospace;font-size:10px;color:var(--muted)">Recurring</div></td>
+        <td><span class="pill" style="background:var(--red-l);color:var(--red)">Anger</span><span class="pill" style="background:var(--purple-l);color:var(--purple-d)">Frustration</span><div style="font-size:10.5px;color:var(--slate);margin-top:4px">Repeated cycles breed deep frustration: "Why does this keep happening to me?"</div></td>
+        <td><span class="pill" style="background:var(--blue-l);color:var(--blue-d)">Dependence</span><span class="pill" style="background:var(--blue-l);color:var(--blue-d)">Independence</span><span class="pill" style="background:var(--amber-l);color:#8a5000">Apprehension</span><div style="font-size:10.5px;color:var(--slate);margin-top:4px">May over-rely on medical staff OR resist help. Fear of reinjury is dominant.</div></td>
+        <td><span class="pill" style="background:#DCFCE7;color:#166534">Confident</span><span class="pill" style="background:var(--red-l);color:var(--red)">Skeptical</span><div style="font-size:10.5px;color:var(--slate);margin-top:4px">Mixed emotions — sometimes confident about recovery, sometimes doubting it will hold.</div></td>
+      </tr>
+      <tr style="background:#FFF1F1">
+        <td><div style="font-weight:700;color:var(--red);font-size:11.5px">TERMINATING</div><div style="font-family:'Fira Mono',monospace;font-size:10px;color:var(--muted)">Career-ending</div></td>
+        <td><span class="pill" style="background:var(--red-l);color:var(--red)">Isolation</span><span class="pill" style="background:var(--red-l);color:var(--red)">Grief Process</span><div style="font-size:10.5px;color:var(--slate);margin-top:4px">Mourning the loss of athletic identity — arguably the most psychologically devastating type.</div></td>
+        <td><span class="pill" style="background:var(--red-l);color:var(--red)">Loss of Athletic Identity</span><div style="font-size:10.5px;color:var(--slate);margin-top:4px">Sport and self-worth become inseparable. Rehab must address identity, not just physical recovery.</div></td>
+        <td><span class="pill" style="background:var(--teal-l);color:var(--teal-d)">Closure</span><span class="pill" style="background:var(--teal-l);color:var(--teal-d)">Renewal</span><div style="font-size:10.5px;color:var(--slate);margin-top:4px">Acceptance of career end; rebuilding a new post-sport identity and life direction.</div></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     OBJ 3 – PREDICTORS
+═══════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="obj-tag" style="background:var(--red-l);color:#7a0000;">● OBJECTIVE 3</div>
+  <div class="sec-header">
+    <div class="sec-num" style="background:var(--red)">3</div>
+    <div class="sec-title">Predictors of Injury &amp; Interventions</div>
+  </div>
+  <div class="g2">
+    <div>
+      <div style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:7px">Injury-Prone Personality Characteristics</div>
+      <div style="background:var(--red-l);border-radius:9px;padding:11px 13px;border:1px solid #f7b8b8;margin-bottom:9px">
+        <div style="font-size:11px;color:var(--red);font-weight:700;margin-bottom:6px">⚠ No single personality type is universally injury-prone. However, common traits include:</div>
+        <div>
+          <span class="pill" style="background:var(--red);color:white">Risk Takers</span>
+          <span class="pill" style="background:white;color:var(--red);border:1px solid var(--red)">Reserved / Detached</span>
+          <span class="pill" style="background:white;color:var(--red);border:1px solid var(--red)">Tender-Minded</span>
+          <span class="pill" style="background:white;color:var(--red);border:1px solid var(--red)">Apprehensive</span>
+          <span class="pill" style="background:white;color:var(--red);border:1px solid var(--red)">Over-protective</span>
+          <span class="pill" style="background:white;color:var(--red);border:1px solid var(--red)">Easily Distracted</span>
+        </div>
+        <div style="font-size:11px;color:var(--slate);margin-top:7px">These athletes <strong>lack the ability to cope with stress</strong> associated with risk and its consequences.</div>
+      </div>
+      <div style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px">Contributing Mechanisms</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px">
+        <div style="background:var(--red-l);border-radius:9px;padding:9px 11px;border-left:3px solid var(--red)"><div style="font-size:11px;font-weight:700;color:var(--red);margin-bottom:3px">Emotional Stress → Injury</div><div style="font-size:11px;color:var(--slate)">Emotionally stressed athletes are MORE prone to injury than emotionally adjusted athletes.</div></div>
+        <div style="background:var(--red-l);border-radius:9px;padding:9px 11px;border-left:3px solid var(--red)"><div style="font-size:11px;font-weight:700;color:var(--red);margin-bottom:3px">Aggression as Anxiety Outlet</div><div style="font-size:11px;color:var(--slate)">Angry athletes may take frustration out on others, losing perspective on safe conduct.</div></div>
+        <div style="background:var(--red-l);border-radius:9px;padding:9px 11px;border-left:3px solid var(--red)"><div style="font-size:11px;font-weight:700;color:var(--red);margin-bottom:3px">Fear of Failure Cycle</div><div style="font-size:11px;color:var(--slate)">Continuing to play through injury to avoid failing perpetuates the injury cycle.</div></div>
+        <div style="background:var(--red-l);border-radius:9px;padding:9px 11px;border-left:3px solid var(--red)"><div style="font-size:11px;font-weight:700;color:var(--red);margin-bottom:3px">Skill &amp; Coordination Loss</div><div style="font-size:11px;color:var(--slate)">Emotional distress impairs technique and motor control, creating avoidable risk.</div></div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:7px">Stress &amp; Risk of Injury</div>
+      <div style="background:#FFF8EE;border-radius:9px;padding:11px 13px;border:1px solid #FAC775;margin-bottom:9px">
+        <div style="font-size:10px;font-weight:700;color:var(--amber);text-transform:uppercase;margin-bottom:7px">Stress → Injury Pathway</div>
+        <div style="display:flex;align-items:center;gap:5px;flex-wrap:wrap">
+          <div style="background:white;border:1.5px solid var(--amber);border-radius:7px;padding:6px 10px;text-align:center;flex:1;min-width:90px"><div style="font-size:10px;font-weight:700;color:var(--amber)">Negative Stressor</div><div style="font-size:10px;color:var(--slate)">e.g. not making lineup, drug test fail</div></div>
+          <div style="font-size:18px;color:var(--amber)">→</div>
+          <div style="background:white;border:1.5px solid var(--red);border-radius:7px;padding:6px 10px;text-align:center;flex:1;min-width:90px"><div style="font-size:10px;font-weight:700;color:var(--red)">Loss of Focus</div><div style="font-size:10px;color:var(--slate)">Misses cues during play</div></div>
+          <div style="font-size:18px;color:var(--amber)">+</div>
+          <div style="background:white;border:1.5px solid var(--red);border-radius:7px;padding:6px 10px;text-align:center;flex:1;min-width:90px"><div style="font-size:10px;font-weight:700;color:var(--red)">Muscle Tension</div><div style="font-size:10px;color:var(--slate)">↓ Flexibility &amp; Coordination</div></div>
+          <div style="font-size:18px;color:var(--amber)">→</div>
+          <div style="background:var(--red);border-radius:7px;padding:6px 10px;text-align:center;flex:1;min-width:70px"><div style="font-size:10px;font-weight:700;color:white">INJURY</div></div>
+        </div>
+        <div style="font-size:10.5px;color:var(--slate);margin-top:6px;font-style:italic">Positive stressors (e.g. making all-conference) are also present but less likely to cause injury.</div>
+      </div>
+      <div style="background:var(--green-l);border-radius:9px;padding:11px 13px;border-left:4px solid var(--green)">
+        <div style="font-size:11px;font-weight:700;color:var(--green);margin-bottom:4px">INTERVENTION STRATEGY</div>
+        <div style="font-size:11px;color:var(--slate)">Athletes with <strong>declining performance</strong> and <strong>personality changes</strong> need a less demanding training program. Confer with the athlete to reveal hidden emotional/physical problems. Refer to a <strong>counselor, psychologist, or physician</strong> as appropriate.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     OBJ 4 – STRESSORS
+═══════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="obj-tag" style="background:#FFF8EE;color:#7a4800;">● OBJECTIVE 4</div>
+  <div class="sec-header">
+    <div class="sec-num" style="background:var(--amber)">4</div>
+    <div class="sec-title">Stressors in the Athlete's Life</div>
+  </div>
+  <div class="g2" style="margin-bottom:12px">
+    <div style="background:#FFF8EE;border-radius:9px;padding:11px 13px;border:1px solid #FAC775">
+      <div style="font-size:10px;font-weight:700;color:var(--amber);text-transform:uppercase;margin-bottom:5px">⚡ Sport-Specific Stressors</div>
+      <ul style="padding-left:13px">
+        <li style="font-size:11px;margin-bottom:3px">Sports are inherently stressful environments</li>
+        <li style="font-size:11px;margin-bottom:3px">Fine line between peak performance and overtraining</li>
+        <li style="font-size:11px;margin-bottom:3px">Unreasonable expectations from athletes themselves</li>
+        <li style="font-size:11px;margin-bottom:3px">Unreasonable expectations from coaches</li>
+        <li style="font-size:11px;margin-bottom:3px">Unreasonable expectations from parents</li>
+        <li style="font-size:11px">Peripheral stressors imposed on the athlete from the sporting environment</li>
+      </ul>
+    </div>
+    <div style="background:var(--purple-l);border-radius:9px;padding:11px 13px;border:1px solid #C9B8F5">
+      <div style="font-size:10px;font-weight:700;color:var(--purple-d);text-transform:uppercase;margin-bottom:5px">🏠 Life Stressors (Peripheral)</div>
+      <ul style="padding-left:13px">
+        <li style="font-size:11px;margin-bottom:3px">School and academic pressure</li>
+        <li style="font-size:11px;margin-bottom:3px">Work obligations outside of sport</li>
+        <li style="font-size:11px;margin-bottom:3px">Family conflicts and relationship difficulties</li>
+        <li style="font-size:11px;margin-bottom:3px">Financial concerns</li>
+        <li style="font-size:11px">Can be a major cause of emotional stress</li>
+      </ul>
+    </div>
+  </div>
+  <!-- Overtraining chain -->
+  <div style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:7px">Overtraining Continuum</div>
+  <div class="chain">
+    <div class="chain-box"><h5>OVERTRAINING</h5><ul><li>Physical load &gt; coping capacity</li><li>Physiological + psychological</li><li>Anxiety: fear, apprehension, restlessness</li><li>Heart palpitations, shortness of breath</li><li>Sweaty palms, headaches, constriction in throat</li><li>Children may fail purposely to escape pressure</li></ul></div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-box"><h5>STALENESS</h5><ul><li>Deteriorating performance standards</li><li>Chronic fatigue and apathy</li><li>Loss of appetite, indigestion, weight loss</li><li>Inability to sleep or rest</li><li>↑ Risk for acute and overuse injuries</li><li>↑ Risk for infections</li><li>Emotional: worries, fears, anxiety</li></ul></div>
+    <div class="chain-arrow">→</div>
+    <div class="chain-box"><h5>BURNOUT</h5><ul><li>Physical and emotional exhaustion</li><li>Negative self-concept</li><li>Negative sports attitudes</li><li>Loss of concern for feelings of others</li><li>Frequent headaches, GI disturbances</li><li>Sleeplessness, chronic fatigue</li><li>Depersonalization, cynicism</li><li>↓ Sense of accomplishment, depressed mood</li></ul></div>
+  </div>
+  <div style="background:var(--green-l);border-radius:9px;padding:10px 13px;border-left:4px solid var(--green);margin-top:10px">
+    <div style="font-size:11px;font-weight:700;color:var(--green);margin-bottom:4px">Overtraining Recovery Protocol</div>
+    <div style="font-size:11px;color:var(--slate)">Recognize early → short interruption <strong>3–5 days</strong> → maintain same intensity, reduce volume → gradually return to previous workload → <strong>remove from competition</strong> during recovery period.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     OBJ 5 – BUFFERS
+═══════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="obj-tag" style="background:var(--teal-l);color:var(--teal-d);">● OBJECTIVE 5</div>
+  <div class="sec-header">
+    <div class="sec-num" style="background:var(--teal)">5</div>
+    <div class="sec-title">Buffers for Stress Management</div>
+  </div>
+  <div style="font-size:11px;color:var(--slate);margin-bottom:12px">Buffers are <strong>protective mechanisms</strong> incorporated within the goal-setting and rehabilitation paradigm that reduce the psychological impact of stress on the injured athlete.</div>
+  <div class="g4" style="margin-bottom:12px">
+    <div style="background:var(--teal-l);border-radius:10px;padding:12px 13px;border-top:3px solid var(--teal)">
+      <div style="font-size:18px;margin-bottom:6px">🏆</div>
+      <div style="font-size:11px;font-weight:700;color:var(--teal-d);margin-bottom:4px">Positive Reinforcement</div>
+      <div style="font-size:11px;color:var(--slate)">Reward and recognition when goals are met during rehabilitation — builds motivation and compliance.</div>
+    </div>
+    <div style="background:var(--blue-l);border-radius:10px;padding:12px 13px;border-top:3px solid var(--blue)">
+      <div style="font-size:18px;margin-bottom:6px">🕒</div>
+      <div style="font-size:11px;font-weight:700;color:var(--blue-d);margin-bottom:4px">Time Management</div>
+      <div style="font-size:11px;color:var(--slate)">Structure for incorporating rehabilitation goals into a daily lifestyle — reduces feeling of chaos and loss of control.</div>
+    </div>
+    <div style="background:var(--purple-l);border-radius:10px;padding:12px 13px;border-top:3px solid var(--purple)">
+      <div style="font-size:18px;margin-bottom:6px">🤝</div>
+      <div style="font-size:11px;font-weight:700;color:var(--purple-d);margin-bottom:4px">Social Support</div>
+      <div style="font-size:11px;color:var(--slate)">Setting goals <strong>jointly</strong> with the coach or fitness professional creates a feeling of social support and belonging.</div>
+    </div>
+    <div style="background:var(--amber-l);border-radius:10px;padding:12px 13px;border-top:3px solid var(--amber)">
+      <div style="font-size:18px;margin-bottom:6px">💪</div>
+      <div style="font-size:11px;font-weight:700;color:#8a5000;margin-bottom:4px">Self-Efficacy</div>
+      <div style="font-size:11px;color:var(--slate)">Feelings of increased self-efficacy when rehabilitation goals are achieved — builds confidence for return.</div>
+    </div>
+  </div>
+  <div style="background:var(--panel);border-radius:9px;padding:10px 14px;border:1px solid var(--border)">
+    <div style="font-size:11px;font-weight:700;color:var(--navy);margin-bottom:3px">Additional Stress Management Techniques (used during rehabilitation)</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:5px">
+      <span class="pill" style="background:var(--teal-l);color:var(--teal-d)">Relaxation</span>
+      <span class="pill" style="background:var(--teal-l);color:var(--teal-d)">Imagery</span>
+      <span class="pill" style="background:var(--teal-l);color:var(--teal-d)">Cognitive Restructuring</span>
+      <span class="pill" style="background:var(--teal-l);color:var(--teal-d)">Thought Stopping</span>
+    </div>
+    <div style="font-size:11px;color:var(--slate);margin-top:6px">Athlete has a more successful rehabilitation when <strong>fully engaged</strong> in the activity of rehabilitation. These techniques lessen the stressful reaction to injury. See Objective 11 for full detail.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     OBJ 6 – GOAL SETTING
+═══════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="obj-tag" style="background:var(--purple-l);color:var(--purple-d);">● OBJECTIVE 6</div>
+  <div class="sec-header">
+    <div class="sec-num" style="background:var(--purple)">6</div>
+    <div class="sec-title">Goal Setting as a Motivator to Rehabilitation Compliance</div>
+  </div>
+  <div style="font-size:11px;color:var(--slate);margin-bottom:12px">Goal setting is an <strong>effective motivator</strong> for compliance to rehabilitation. Goals must be personal, internally satisfying, and set as a <strong>joint venture</strong> between athlete and coach/fitness professional.</div>
+
+  <div class="g2" style="margin-bottom:12px">
+    <div>
+      <div style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:7px">Nine Factors for Effective Goal Setting</div>
+      <div class="goal-item"><div class="goal-num" style="background:var(--purple)">1</div><div><div style="font-size:11px;font-weight:700">Set Specific and Measurable Goals</div><div style="font-size:11px;color:var(--slate)">Goals must be clearly defined and quantifiable — not vague aspirations.</div></div></div>
+      <div class="goal-item"><div class="goal-num" style="background:var(--purple)">2</div><div><div style="font-size:11px;font-weight:700">Use Positive vs. Negative Language</div><div style="font-size:11px;color:var(--slate)">Frame goals in terms of what the athlete will do, not what to avoid.</div></div></div>
+      <div class="goal-item"><div class="goal-num" style="background:var(--purple)">3</div><div><div style="font-size:11px;font-weight:700">Challenging but Realistic</div><div style="font-size:11px;color:var(--slate)">Goals should stretch the athlete but remain achievable within their current capacity.</div></div></div>
+      <div class="goal-item"><div class="goal-num" style="background:var(--purple)">4</div><div><div style="font-size:11px;font-weight:700">Set a Reasonable Timetable</div><div style="font-size:11px;color:var(--slate)">Attach target dates to each goal to create accountability and urgency.</div></div></div>
+      <div class="goal-item"><div class="goal-num" style="background:var(--purple)">5</div><div><div style="font-size:11px;font-weight:700">Integrate Short-, Medium-, and Long-Term Goals</div><div style="font-size:11px;color:var(--slate)">Layer goals across timescales: daily → weekly → monthly → seasonal/yearly.</div></div></div>
+      <div class="goal-item"><div class="goal-num" style="background:var(--purple)">6</div><div><div style="font-size:11px;font-weight:700">Link Outcome to Process</div><div style="font-size:11px;color:var(--slate)">Connect the big picture outcome (return to play) to daily process actions.</div></div></div>
+      <div class="goal-item"><div class="goal-num" style="background:var(--purple)">7</div><div><div style="font-size:11px;font-weight:700">Internalize Goals</div><div style="font-size:11px;color:var(--slate)">Goals must be personally meaningful — not externally imposed by others.</div></div></div>
+      <div class="goal-item"><div class="goal-num" style="background:var(--purple)">8</div><div><div style="font-size:11px;font-weight:700">Monitor and Evaluate Goals</div><div style="font-size:11px;color:var(--slate)">Regularly review progress; adjust if goals are too easy or too hard.</div></div></div>
+      <div class="goal-item"><div class="goal-num" style="background:var(--purple)">9</div><div><div style="font-size:11px;font-weight:700">Link Sports Goals to Life Goals</div><div style="font-size:11px;color:var(--slate)">Connect rehabilitation goals to the athlete's broader life aspirations and values.</div></div></div>
+    </div>
+    <div>
+      <div style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:7px">Goal Timeframes</div>
+      <div style="display:flex;flex-direction:column;gap:7px;margin-bottom:12px">
+        <div style="background:var(--purple-l);border-radius:8px;padding:9px 12px;border-left:3px solid var(--purple)"><div style="font-size:11px;font-weight:700;color:var(--purple-d)">Daily Goals</div><div style="font-size:11px;color:var(--slate)">Provide a sense of accomplishment — small wins maintain motivation during long rehab.</div></div>
+        <div style="background:var(--purple-l);border-radius:8px;padding:9px 12px;border-left:3px solid var(--purple)"><div style="font-size:11px;font-weight:700;color:var(--purple-d)">Weekly Goals</div><div style="font-size:11px;color:var(--slate)">Provide a sense of progress — benchmarks show movement in the right direction.</div></div>
+        <div style="background:var(--purple-l);border-radius:8px;padding:9px 12px;border-left:3px solid var(--purple)"><div style="font-size:11px;font-weight:700;color:var(--purple-d)">Monthly / Yearly Goals</div><div style="font-size:11px;color:var(--slate)">Provide long-term achievement milestones — the light at the end of the tunnel.</div></div>
+      </div>
+      <div style="background:var(--purple-l);border-radius:9px;padding:11px 13px;border:1px solid #C9B8F5">
+        <div style="font-size:10px;font-weight:700;color:var(--purple-d);text-transform:uppercase;margin-bottom:5px">Key Principles</div>
+        <ul style="padding-left:13px">
+          <li style="font-size:11px;margin-bottom:3px">Goal setting is effective in both sport performance AND rehabilitation</li>
+          <li style="font-size:11px;margin-bottom:3px">Goals must be <strong>personal and internally satisfying</strong> — not imposed on the athlete</li>
+          <li style="font-size:11px;margin-bottom:3px">Setting goals is a <strong>joint venture</strong> between athlete and coach/fitness professional</li>
+          <li style="font-size:11px;margin-bottom:3px">Long-term goals are achieved through many short-term goals met first</li>
+          <li style="font-size:11px">Athletes should be aware of the goal and <strong>believe it can be met</strong></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- Buffers in goal context -->
+  <div style="background:var(--panel);border-radius:9px;padding:10px 14px;border:1px solid var(--border)">
+    <div style="font-size:11px;font-weight:700;color:var(--navy);margin-bottom:4px">Buffers Incorporated within the Goal-Setting Paradigm</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <span class="pill" style="background:var(--teal-l);color:var(--teal-d)">✓ Positive Reinforcement when goals are met</span>
+      <span class="pill" style="background:var(--blue-l);color:var(--blue-d)">✓ Time Management into lifestyle</span>
+      <span class="pill" style="background:var(--purple-l);color:var(--purple-d)">✓ Social Support from joint goal-setting</span>
+      <span class="pill" style="background:var(--amber-l);color:#8a5000">✓ Increased Self-Efficacy from achievement</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     OBJ 7 – MANAGING PSYCHOLOGICAL IMPACT
+═══════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="obj-tag" style="background:var(--green-l);color:#0a5028;">● OBJECTIVE 7</div>
+  <div class="sec-header">
+    <div class="sec-num" style="background:var(--green)">7</div>
+    <div class="sec-title">Considerations in Managing the Psychological Impact of Injury</div>
+  </div>
+  <div style="font-size:11px;color:var(--slate);margin-bottom:12px">The sports medicine team, coach, or fitness professional can have a <strong>significant impact</strong> on how an athlete deals with injury psychologically. Successful communication is critical to recovery time and effort.</div>
+
+  <div style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px">BOX 12–2: Eight Things a Coach / Fitness Professional / Athletic Trainer Can Do</div>
+  <div class="g2">
+    <div>
+      <div class="sup-item" style="background:var(--green-l);border-left-color:var(--green);margin-bottom:6px"><div><div style="font-size:11px;font-weight:700;color:var(--green)">1. Be a Good Listener</div><div style="font-size:11px;color:var(--slate)">Listen beyond the complaining. Pay attention to fear, anger, depression, or anxiety in the athlete's voice. Use "I see", "Go ahead", or silence to let them fully express themselves.</div></div></div>
+      <div class="sup-item" style="background:var(--green-l);border-left-color:var(--green);margin-bottom:6px"><div><div style="font-size:11px;font-weight:700;color:var(--green)">2. Be Aware of Body Language</div><div style="font-size:11px;color:var(--slate)">Look athletes in the eye with genuine interest. Body language projects care and respect — athletes notice non-verbal signals as much as spoken words.</div></div></div>
+      <div class="sup-item" style="background:var(--green-l);border-left-color:var(--green);margin-bottom:6px"><div><div style="font-size:11px;font-weight:700;color:var(--green)">3. Project a Caring Image</div><div style="font-size:11px;color:var(--slate)">Consider the athlete as an individual, not just "the sprained ankle." Treat them as an equal. Neglecting injured athletes gives the perception that they are "outcasts."</div></div></div>
+      <div class="sup-item" style="background:var(--green-l);border-left-color:var(--green);margin-bottom:6px"><div><div style="font-size:11px;font-weight:700;color:var(--green)">4. Find Out Exactly What the Problem Is</div><div style="font-size:11px;color:var(--slate)">Allow the athlete to provide as much input as possible about their injury. Identify the problem clearly before offering solutions or reassurance.</div></div></div>
+    </div>
+    <div>
+      <div class="sup-item" style="background:var(--green-l);border-left-color:var(--green);margin-bottom:6px"><div><div style="font-size:11px;font-weight:700;color:var(--green)">5. Explain the Injury to the Athlete</div><div style="font-size:11px;color:var(--slate)">Athletic trainer or physician must clearly explain the injury and its circumstances. Provide a clear, simple explanation the athlete can understand — reduces fear of the unknown.</div></div></div>
+      <div class="sup-item" style="background:var(--green-l);border-left-color:var(--green);margin-bottom:6px"><div><div style="font-size:11px;font-weight:700;color:var(--green)">6. Manage the Stress of Injury</div><div style="font-size:11px;color:var(--slate)">Use techniques to lessen the stressful reaction: <strong>Relaxation, Imagery, Cognitive Restructuring, Thought Stopping.</strong> Full engagement in rehab activities improves outcomes.</div></div></div>
+      <div class="sup-item" style="background:var(--green-l);border-left-color:var(--green);margin-bottom:6px"><div><div style="font-size:11px;font-weight:700;color:var(--green)">7. Keep the Athlete Involved with the Team</div><div style="font-size:11px;color:var(--slate)">Prevent alienation — especially in long-term rehab. Plan sport-specific drills during practice time. Athlete re-enters team culture, avoids isolation, maintains identity and motivation.</div></div></div>
+      <div class="sup-item" style="background:var(--green-l);border-left-color:var(--green)"><div><div style="font-size:11px;font-weight:700;color:var(--green)">8. Help the Athlete Return to Play</div><div style="font-size:11px;color:var(--slate)">Assist decisions based on facts, not emotions. Address perceptions: is the athlete being held back unfairly, or forced to return too soon? Navigate these tensions carefully.</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     OBJ 8 – RETURN TO COMPETITION
+═══════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="obj-tag" style="background:#FFF0F8;color:var(--pink);">● OBJECTIVE 8</div>
+  <div class="sec-header">
+    <div class="sec-num" style="background:var(--pink)">8</div>
+    <div class="sec-title">Decision-Making Process for Return to Competition</div>
+  </div>
+
+  <div class="g2">
+    <div>
+      <div style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:7px">Who Decides?</div>
+      <div style="background:var(--pink-l);border-radius:9px;padding:11px 13px;border:1px solid #F4C0D6;margin-bottom:9px">
+        <div style="font-size:11px;font-weight:700;color:var(--pink);margin-bottom:5px">The athletic trainer or team physician should decide — not the coach or athlete alone.</div>
+        <div style="font-size:11px;color:var(--slate);margin-bottom:6px"><strong>Coaches</strong> are likely to return players based on <em>status and game situation</em>.</div>
+        <div style="font-size:11px;color:var(--slate)"><strong>Athletic trainers</strong> make decisions based on <em>status of the athlete's injury</em>.</div>
+      </div>
+      <div style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:7px">Playing with Pain — Key Considerations</div>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <div style="background:var(--red-l);border-radius:8px;padding:9px 11px;border-left:3px solid var(--red)"><div style="font-size:11px;font-weight:700;color:var(--red)">⚠ Severe injury is made worse</div><div style="font-size:11px;color:var(--slate)">Continuing to compete on a serious injury exacerbates the damage and extends total recovery time.</div></div>
+        <div style="background:var(--red-l);border-radius:8px;padding:9px 11px;border-left:3px solid var(--red)"><div style="font-size:11px;font-weight:700;color:var(--red)">⚠ Long-term consequences</div><div style="font-size:11px;color:var(--slate)">An athlete who plays through unhealed injury constantly reduces chances of a healthy life of activity.</div></div>
+        <div style="background:var(--amber-l);border-radius:8px;padding:9px 11px;border-left:3px solid var(--amber)"><div style="font-size:11px;font-weight:700;color:#8a5000">⚠ Fear of losing starting position</div><div style="font-size:11px;color:var(--slate)">Athletes fearing bench time may push for return prematurely — candidates for reinjury and may reinforce a coach's decision to play someone else.</div></div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:7px">Objective Return Decision Framework</div>
+      <div style="background:var(--pink-l);border-radius:9px;padding:11px 13px;border:1px solid #F4C0D6;margin-bottom:9px">
+        <div style="font-size:10px;font-weight:700;color:var(--pink);text-transform:uppercase;margin-bottom:6px">Process</div>
+        <div class="arrow-row" style="flex-direction:column;align-items:flex-start;gap:5px">
+          <div style="display:flex;align-items:center;gap:6px"><div style="width:22px;height:22px;background:var(--pink);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:white;flex-shrink:0">1</div><div style="font-size:11px;color:var(--slate)">Collect <strong>baseline performance data</strong> in the preseason</div></div>
+          <div style="display:flex;align-items:center;gap:6px"><div style="width:22px;height:22px;background:var(--pink);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:white;flex-shrink:0">2</div><div style="font-size:11px;color:var(--slate)">When athlete appears physically/psychologically ready, <strong>retest</strong> using same measures</div></div>
+          <div style="display:flex;align-items:center;gap:6px"><div style="width:22px;height:22px;background:var(--pink);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:white;flex-shrink:0">3</div><div style="font-size:11px;color:var(--slate)"><strong>Compare scores</strong> to preseason baseline</div></div>
+          <div style="display:flex;align-items:center;gap:6px"><div style="width:22px;height:22px;background:var(--pink);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:white;flex-shrink:0">4</div><div style="font-size:11px;color:var(--slate)">Consider <strong>physical, emotional, psychological</strong> aspects of readiness</div></div>
+        </div>
+      </div>
+      <div style="background:var(--panel);border-radius:9px;padding:10px 13px;border:1px solid var(--border)">
+        <div style="font-size:11px;font-weight:700;color:var(--navy);margin-bottom:4px">Holistic Factors Influencing Return</div>
+        <ul style="padding-left:13px">
+          <li style="font-size:11px;margin-bottom:2px">Impact of the environment</li>
+          <li style="font-size:11px;margin-bottom:2px">Support of the athletic community</li>
+          <li style="font-size:11px;margin-bottom:2px">Culture in which the athlete resides at time of injury</li>
+          <li style="font-size:11px">Rehabilitation is more than just physical, emotional, or psychological — all combine to influence the course from injury through to return</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     OBJ 9 – SOCIAL SUPPORT
+═══════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="obj-tag" style="background:var(--blue-l);color:var(--blue-d);">● OBJECTIVE 9</div>
+  <div class="sec-header">
+    <div class="sec-num" style="background:var(--blue)">9</div>
+    <div class="sec-title">Why Social Support Is Important to the Injured Athlete</div>
+  </div>
+  <div class="g2">
+    <div>
+      <div style="background:var(--blue-l);border-radius:9px;padding:11px 13px;border:1px solid #b3d0fd;margin-bottom:9px">
+        <div style="font-size:11px;font-weight:700;color:var(--blue-d);margin-bottom:5px">Core Principle</div>
+        <ul style="padding-left:13px">
+          <li style="font-size:11px;margin-bottom:3px">Athletes should be shown the coach/professional cares for them <strong>as a person</strong>, not just as a team asset</li>
+          <li style="font-size:11px;margin-bottom:3px">The athlete's <strong>perception</strong> of the coach or fitness professional makes a difference in recovery time and effort</li>
+          <li style="font-size:11px;margin-bottom:3px">Successful communication is <strong>critical</strong> — the relationship drives compliance</li>
+          <li style="font-size:11px;margin-bottom:3px">During frustration, showing concern wins athlete's <strong>loyalty and dedication</strong></li>
+          <li style="font-size:11px">Neglecting injured athletes gives them the perception they are <strong>"outcasts"</strong></li>
+        </ul>
+      </div>
+      <div style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:7px">Keeping the Athlete Involved</div>
+      <div style="background:var(--blue-l);border-radius:9px;padding:10px 13px;border:1px solid #b3d0fd">
+        <ul style="padding-left:13px">
+          <li style="font-size:11px;margin-bottom:3px">Athletes may feel <strong>alienated</strong> from the team — critical in long-term rehab</li>
+          <li style="font-size:11px;margin-bottom:3px">Social support prevents feelings of <strong>negative self-worth and loss of identity</strong></li>
+          <li style="font-size:11px;margin-bottom:3px">Plan <strong>sport-specific drills</strong> during practice time with the team</li>
+          <li style="font-size:11px;margin-bottom:3px">Athlete re-enters team culture and is <strong>not isolated</strong> from team environment</li>
+          <li style="font-size:11px">Athlete can put more effort into functional, sport-specific situations that are <strong>less boring</strong></li>
+        </ul>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:7px">How to Provide Social Support — Step by Step</div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <div style="background:var(--panel);border-radius:8px;padding:8px 11px;border:1px solid var(--border)"><div style="font-size:11px;font-weight:700;color:var(--blue-d)">Identify the Problem</div><div style="font-size:11px;color:var(--slate)">Allow the athlete to provide as much input about their injury as possible.</div></div>
+        <div style="background:var(--panel);border-radius:8px;padding:8px 11px;border:1px solid var(--border)"><div style="font-size:11px;font-weight:700;color:var(--blue-d)">Active Listening</div><div style="font-size:11px;color:var(--slate)">Listen beyond the complaining. Attend to fear, anger, depression, or anxiety in the athlete's voice.</div></div>
+        <div style="background:var(--panel);border-radius:8px;padding:8px 11px;border:1px solid var(--border)"><div style="font-size:11px;font-weight:700;color:var(--blue-d)">Establish Rapport</div><div style="font-size:11px;color:var(--slate)">Show genuine concern; establish a sense of caring for the athlete as an individual.</div></div>
+        <div style="background:var(--panel);border-radius:8px;padding:8px 11px;border:1px solid var(--border)"><div style="font-size:11px;font-weight:700;color:var(--blue-d)">Explain the Injury</div><div style="font-size:11px;color:var(--slate)">Clear, simple explanation from the athletic trainer or physician reduces fear of the unknown.</div></div>
+        <div style="background:var(--panel);border-radius:8px;padding:8px 11px;border:1px solid var(--border)"><div style="font-size:11px;font-weight:700;color:var(--blue-d)">Return to Play Assistance</div><div style="font-size:11px;color:var(--slate)">Help the athlete make decisions based on facts — not clouded by emotion or fear.</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     OBJ 10 – COUNSELLOR / PSYCHOLOGIST / PSYCHIATRIST
+═══════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="obj-tag" style="background:#F0F0F0;color:#2d3748;">● OBJECTIVE 10</div>
+  <div class="sec-header">
+    <div class="sec-num" style="background:#4A5568">10</div>
+    <div class="sec-title">Differentiating: Counsellor vs. Psychologist vs. Psychiatrist</div>
+  </div>
+  <div style="font-size:11px;color:var(--slate);margin-bottom:12px">Coaches and fitness professionals must have <strong>appropriate counseling skills</strong> to confront an athlete's fears, frustrations, and daily crises — and to refer to the correct professional when serious issues arise.</div>
+  <table class="prof-table">
+    <thead><tr>
+      <th style="width:20%">Professional</th>
+      <th style="width:26%">Qualifications</th>
+      <th style="width:28%">Role / Scope</th>
+      <th style="width:26%">When to Refer</th>
+    </tr></thead>
+    <tbody>
+      <tr>
+        <td><div style="font-weight:700;color:#0C9E80;font-size:12px">Counsellor</div><span class="pill" style="background:var(--teal-l);color:var(--teal-d);font-size:10px">Talk-based</span></td>
+        <td style="font-size:11px">Degree in counseling, social work, or related field. May have certification in sports counseling. Not typically licensed to diagnose.</td>
+        <td style="font-size:11px">Addresses daily stressors, performance anxiety, adjustment to injury, goal setting, and coping strategies through structured conversation.</td>
+        <td style="font-size:11px">Athlete experiencing performance anxiety, adjustment difficulties, general stress, fears, and daily crises that do not constitute clinical disorders.</td>
+      </tr>
+      <tr>
+        <td><div style="font-weight:700;color:var(--purple);font-size:12px">Psychologist</div><span class="pill" style="background:var(--purple-l);color:var(--purple-d);font-size:10px">Diagnosis + therapy</span></td>
+        <td style="font-size:11px">Doctoral degree (PhD, PsyD, or EdD in psychology). Licensed to practice. Can conduct psychological testing and assessment.</td>
+        <td style="font-size:11px">Diagnoses and treats mental disorders using psychotherapy. May specialize in sport psychology. Cannot prescribe medication in most jurisdictions.</td>
+        <td style="font-size:11px"><strong>Serious emotional instabilities</strong> must be referred to a professional psychologist. Mental disorders, mood disorders, anxiety disorders, identity crises.</td>
+      </tr>
+      <tr>
+        <td><div style="font-weight:700;color:var(--blue);font-size:12px">Psychiatrist</div><span class="pill" style="background:var(--blue-l);color:var(--blue-d);font-size:10px">Medical + medication</span></td>
+        <td style="font-size:11px">Medical doctor (MD or DO) with specialization in psychiatry. Can prescribe medication. Highest level of clinical training.</td>
+        <td style="font-size:11px">Diagnoses and treats mental disorders using both psychotherapy AND medication. Handles severe or complex psychiatric conditions requiring pharmacological management.</td>
+        <td style="font-size:11px">Severe depression, psychosis, bipolar disorder, PTSD requiring medication. When psychotherapy alone is insufficient. Personality disorders requiring antipsychotic medications.</td>
+      </tr>
+    </tbody>
+  </table>
+  <div style="background:var(--amber-l);border-radius:9px;padding:10px 14px;border-left:4px solid var(--amber);margin-top:10px">
+    <div style="font-size:11px;font-weight:700;color:var(--amber);margin-bottom:3px">Coach / Fitness Professional's Role in Referral</div>
+    <div style="font-size:11px;color:var(--slate)">Coaches and fitness professionals are NOT therapists. Their role is to: (1) recognize signs of emotional disturbance, (2) provide basic counseling support for daily crises, and (3) <strong>refer individuals with serious emotional problems to the appropriate professional</strong>. Knowing when to refer is as important as the referral itself.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     OBJ 11 – PSYCHOLOGICAL SKILLS TRAINING
+═══════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="obj-tag" style="background:var(--teal-l);color:var(--teal-d);">● OBJECTIVE 11</div>
+  <div class="sec-header">
+    <div class="sec-num" style="background:var(--teal)">11</div>
+    <div class="sec-title">Psychological Skills Training Techniques for Managing Injury</div>
+  </div>
+  <div style="font-size:11px;color:var(--slate);margin-bottom:12px">Athletic trainers can help injured athletes respond positively to injury via specific psychological training techniques. <strong>Serious emotional instabilities</strong> must be referred to a professional psychologist — these techniques are for managing, not treating, psychological responses.</div>
+  <div class="g2" style="margin-bottom:10px">
+    <!-- Progressive Relaxation -->
+    <div class="skill-card" style="background:var(--teal-l);border:1px solid #9FE1CB">
+      <div style="font-size:18px;margin-bottom:5px">🧘</div>
+      <h4 style="color:var(--teal-d)">Progressive Relaxation</h4>
+      <div style="font-size:10px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.8px;margin-bottom:5px">Most extensively used technique</div>
+      <p style="margin-bottom:7px">Involves intense training in the <strong>awareness of tension</strong> and tension's release. Reduces tension and anxiety systematically through the body.</p>
+      <div style="background:white;border-radius:8px;padding:9px 11px;border:1px solid rgba(0,0,0,.1)">
+        <div style="font-size:10px;font-weight:700;color:var(--teal-d);text-transform:uppercase;margin-bottom:4px">Protocol</div>
+        <ul>
+          <li>Practiced in a <strong>reclining position</strong> or seated in a chair</li>
+          <li>Each muscle group tensed for <strong>5–7 seconds</strong></li>
+          <li>Then relaxed for <strong>20–30 seconds</strong></li>
+          <li>Moves systematically through all major muscle groups</li>
+          <li>Goal: athlete learns to recognize and release tension consciously</li>
+        </ul>
+      </div>
+    </div>
+    <!-- Meditation -->
+    <div class="skill-card" style="background:var(--purple-l);border:1px solid #C9B8F5">
+      <div style="font-size:18px;margin-bottom:5px">🧠</div>
+      <h4 style="color:var(--purple-d)">Meditation</h4>
+      <div style="font-size:10px;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:.8px;margin-bottom:5px">Mental focus technique</div>
+      <p style="margin-bottom:7px">Reduces tension and anxiety through sustained mental focus. Requires a <strong>quiet environment</strong> and intentional concentration.</p>
+      <div style="background:white;border-radius:8px;padding:9px 11px;border:1px solid rgba(0,0,0,.1)">
+        <div style="font-size:10px;font-weight:700;color:var(--purple-d);text-transform:uppercase;margin-bottom:4px">Methods</div>
+        <ul>
+          <li>Focusing on a <strong>constant mental stimulus</strong> — a phrase, a sound, or a single word repeated silently or audibly</li>
+          <li><strong>Gazing steadily</strong> at a fixed object to anchor attention</li>
+          <li>Goal: quieting the mind, reducing anxiety and emotional reactivity</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="g3">
+    <!-- Imagery -->
+    <div class="skill-card" style="background:var(--blue-l);border:1px solid #b3d0fd">
+      <div style="font-size:18px;margin-bottom:5px">👁</div>
+      <h4 style="color:var(--blue-d)">Imagery (Mental Rehearsal)</h4>
+      <p style="margin-bottom:7px">Using the <strong>senses to create or recreate</strong> an experience in the mind. Athletes visually rehearse challenges anticipated on return.</p>
+      <div style="background:white;border-radius:8px;padding:8px 10px;border:1px solid rgba(0,0,0,.1)">
+        <ul>
+          <li>Rehearse problems that may stand in the way of return to competition</li>
+          <li>Rehearse how they will <strong>overcome</strong> these problems</li>
+          <li>Builds confidence and motivational skills needed for successful return</li>
+          <li>Can be used alongside relaxation techniques</li>
+        </ul>
+      </div>
+    </div>
+    <!-- Cognitive Restructuring -->
+    <div class="skill-card" style="background:var(--amber-l);border:1px solid #FAC775">
+      <div style="font-size:18px;margin-bottom:5px">🔄</div>
+      <h4 style="color:#8a5000">Cognitive Restructuring</h4>
+      <p style="margin-bottom:7px">Changing the way an athlete <strong>thinks about their injury</strong> — replacing negative, irrational thoughts with more positive, realistic ones.</p>
+      <div style="background:white;border-radius:8px;padding:8px 10px;border:1px solid rgba(0,0,0,.1)">
+        <ul>
+          <li>Identify and challenge <strong>irrational beliefs</strong> about the injury</li>
+          <li>Replace negative self-talk with <strong>constructive reframing</strong></li>
+          <li>Addresses thoughts like "I'll never be the same athlete again"</li>
+          <li>Promotes a more realistic, positive cognitive appraisal</li>
+        </ul>
+      </div>
+    </div>
+    <!-- Thought Stopping -->
+    <div class="skill-card" style="background:var(--red-l);border:1px solid #f7b8b8">
+      <div style="font-size:18px;margin-bottom:5px">🛑</div>
+      <h4 style="color:var(--red)">Thought Stopping</h4>
+      <p style="margin-bottom:7px">Consciously interrupting and <strong>halting negative thought patterns</strong> before they spiral and negatively impact rehabilitation.</p>
+      <div style="background:white;border-radius:8px;padding:8px 10px;border:1px solid rgba(0,0,0,.1)">
+        <ul>
+          <li>Athlete mentally says "STOP" when a negative thought arises</li>
+          <li>Immediately <strong>replace</strong> the negative thought with a positive one</li>
+          <li>Can be paired with a physical cue (e.g. snapping a rubber band)</li>
+          <li>Prevents negative spirals that impede compliance and motivation</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════
+     OBJ 12 – MENTAL DISORDERS
+═══════════════════════════════════════════════════════ -->
+<div class="section">
+  <div class="obj-tag" style="background:var(--red-l);color:#7a0000;">● OBJECTIVE 12</div>
+  <div class="sec-header">
+    <div class="sec-num" style="background:var(--red)">12</div>
+    <div class="sec-title">Mental Disorders — Recognition, Referral &amp; Treatment</div>
+  </div>
+
+  <div class="g2" style="margin-bottom:12px">
+    <div style="background:var(--panel);border-radius:9px;padding:11px 13px;border:1px solid var(--border)">
+      <div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px">Mental Health Defined</div>
+      <div style="font-size:11px;color:var(--slate);margin-bottom:5px">Includes an individual's <strong>psychological, emotional, and social well-being</strong>. Defined as a positive mental state that allows an individual to thrive and be resilient. Common in our society.</div>
+    </div>
+    <div style="background:var(--red-l);border-radius:9px;padding:11px 13px;border:1px solid #f7b8b8">
+      <div style="font-size:10px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px">Mental Disorder Defined</div>
+      <div style="font-size:11px;color:var(--slate)">Syndrome characterized by <strong>clinically significant disturbances</strong> in cognition, emotional regulation, or behavior. Reflects a dysfunction in the psychological, biological, or developmental process underlying mental functioning.</div>
+    </div>
+  </div>
+
+  <!-- Classification: 3 types -->
+  <div style="font-size:10px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:9px">Three Classifications of Mental Disorders</div>
+
+  <!-- Mood Disorders -->
+  <div style="background:var(--purple-l);border-radius:11px;padding:14px;border:1px solid #C9B8F5;margin-bottom:10px">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:9px">
+      <div style="width:28px;height:28px;background:var(--purple);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0">M</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:1px;color:var(--purple-d)">Mood Disorders</div>
+    </div>
+    <div style="font-size:11px;color:#4a2fa0;margin-bottom:8px">Characterized by <strong>mood swings ranging from happiness to sadness</strong> which disrupt normal behavior. Often accompanied by physical symptoms such as sleep or appetite disturbances.</div>
+    <div class="g2">
+      <div class="disorder" style="background:white;border-left-color:var(--purple)">
+        <h4 style="color:var(--purple-d)">Depression</h4>
+        <ul>
+          <li>Helplessness and misery</li>
+          <li>Loss of energy</li>
+          <li>Excessive guilt</li>
+          <li>Diminished ability to think or concentrate</li>
+          <li>Changes in eating and sleeping habits</li>
+          <li>Recurrent thoughts of hurting themselves, suicide, or death</li>
+        </ul>
+      </div>
+      <div class="disorder" style="background:white;border-left-color:var(--blue)">
+        <h4 style="color:var(--blue-d)">Seasonal Affective Disorder (SAD)</h4>
+        <ul>
+          <li>Mental depression related to a specific season (usually winter)</li>
+          <li>Caused by decrease in sunlight during winter months</li>
+          <li>Symptoms: fatigue, diminished concentration, daytime drowsiness</li>
+          <li>Also: sweating, increased HR, increased BP, stomach discomfort, chills, dry mouth, irritability, sleep disturbances</li>
+          <li>Abnormal when it interferes with emotional well-being or daily functioning</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Anxiety Disorders -->
+  <div style="background:#FFF8EE;border-radius:11px;padding:14px;border:1px solid #FAC775;margin-bottom:10px">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:9px">
+      <div style="width:28px;height:28px;background:var(--amber);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0">A</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:1px;color:#8a5000">Anxiety Disorders</div>
+    </div>
+    <div style="font-size:11px;color:#8a5000;margin-bottom:8px">Anxiety is one of the most common mental and emotional stress producers. Reflected by <strong>vague fear, apprehension, and restlessness</strong>. Athlete may feel inadequate without being able to say why.</div>
+    <div style="font-size:11px;color:var(--slate);margin-bottom:8px"><strong>Physical symptoms:</strong> heart palpitations, shortness of breath, sweaty palms, constriction in the throat, headaches.</div>
+    <div class="g2">
+      <div class="disorder" style="background:white;border-left-color:var(--amber)">
+        <h4 style="color:#924F00">Panic Attack</h4>
+        <ul>
+          <li>Unexpected and unprovoked, intensely fearful experience of terror</li>
+          <li>Occurs in approximately <strong>30% of young adults</strong></li>
+          <li>Most likely to occur at night</li>
+          <li>Tends to run in families (genetic component)</li>
+          <li>Emotionally intense; may feel like a medical emergency</li>
+        </ul>
+      </div>
+      <div class="disorder" style="background:white;border-left-color:var(--amber)">
+        <h4 style="color:#924F00">Phobia</h4>
+        <ul>
+          <li>Persistent and <strong>irrational fear</strong> of a specific situation, activity, or object</li>
+          <li>Creates intense desire to avoid the feared stimulus</li>
+          <li>Symptoms: increased HR, difficulty breathing, sweating, dizziness</li>
+          <li><strong>Treatments:</strong> behavioral modification AND antidepressant or anti-anxiety medications</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Personality Disorders -->
+  <div style="background:var(--red-l);border-radius:11px;padding:14px;border:1px solid #f7b8b8">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:9px">
+      <div style="width:28px;height:28px;background:var(--red);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;flex-shrink:0">P</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:1px;color:#7a0000">Personality Disorders</div>
+    </div>
+    <div style="font-size:11px;color:#7a0000;margin-bottom:5px"><strong>Pathological disturbance</strong> in cognition, affect, interpersonal functioning, or impulse control. Usually of long duration — can be traced to events or circumstances in adolescence.</div>
+    <div style="font-size:11px;color:var(--slate);margin-bottom:8px"><strong>Treatment:</strong> psychotherapy and/or antipsychotic medications.</div>
+    <div class="g3">
+      <div class="disorder" style="background:white;border-left-color:var(--red)">
+        <h4 style="color:var(--red)">Paranoia</h4>
+        <p>Having <strong>unrealistic and unfounded suspicions</strong> about specific people or things. Persistent distrust without factual basis.</p>
+      </div>
+      <div class="disorder" style="background:white;border-left-color:var(--red)">
+        <h4 style="color:var(--red)">Obsessive-Compulsive Disorder (OCD)</h4>
+        <p>Engaging in <strong>unreasonable repetitive acts</strong> (e.g. washing hands repeatedly) in response to obsessive thoughts.</p>
+      </div>
+      <div class="disorder" style="background:white;border-left-color:var(--red)">
+        <h4 style="color:var(--red)">Post-Traumatic Stress Disorder (PTSD)</h4>
+        <p>Occurs following a <strong>psychologically traumatic event</strong> — personal assault/abuse, sexual assault or harassment, or a catastrophic event (e.g. plane crash).</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<div style="text-align:center;font-size:10px;color:var(--muted);margin-top:10px;padding-bottom:10px">
+  Chapter 12 · Prentice, Essentials of Athletic Injury Management, 12th Ed. (2023) · All 12 Objectives · Complete Study Reference · Print-to-PDF for best results
+</div>
+
+</body>
+</html>

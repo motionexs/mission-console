@@ -3,10 +3,10 @@ import { promises as fs } from "fs";
 import path from "path";
 
 // On Vercel, vault files are in the /vault directory of the repo
-// On local, use the Obsidian path
+// On local, use the Obsidian path (notes are now at root level after restructuring)
 const VAULT_PATH = process.env.VERCEL
   ? path.join(process.cwd(), "vault")
-  : "/Users/elfredfleischman/Documents/obsidian/Elfred Brain/Elfred Brain";
+  : "/Users/elfredfleischman/Documents/obsidian/Elfred Brain";
 
 // ─── Vault Scanner ───────────────────────────────────────────────────────────
 
