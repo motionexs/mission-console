@@ -1,22 +1,12 @@
 import { NextResponse } from "next/server";
-import { prisma } from "@/lib/prisma";
 import { promises as fs } from "fs";
 import path from "path";
-import { exec } from "child_process";
-import { promisify } from "util";
 
-const execAsync = promisify(exec);
-
-// For Vercel: vault is in the same repo under /vault
-// For local: vault is at the Obsidian path
+// On Vercel, vault files are in the repo (deployed from GitHub)
+// On local, use the Obsidian path
 const VAULT_PATH = process.env.VERCEL
-  ? path.join(process.cwd(), "vault")
+  ? path.join(process.cwd(), "Elfred Brain")
   : "/Users/elfredfleischman/Documents/obsidian/Elfred Brain/Elfred Brain";
-
-const HERMES_HOME = path.join(process.env.HOME || "~", ".hermes");
-const SKILLS_PATH = path.join(HERMES_HOME, "skills");
-const OPTIONAL_SKILLS_PATH = path.join(HERMES_HOME, "hermes-agent/optional-skills");
-const PLUGINS_PATH = path.join(HERMES_HOME, "hermes-agent/plugins");
 
 // ─── Vault Scanner ───────────────────────────────────────────────────────────
 
@@ -75,7 +65,7 @@ async function scanVault() {
   return notes;
 }
 
-// ─── Skills (Hermes System Prompt Catalog) ───────────────────────────────────
+// ─── Skills (Hermes Catalog) ────────────────────────────────────────────────
 
 const ALL_HERMES_SKILLS: Array<{ name: string; category: string }> = [
   { name: "apple-notes", category: "apple" },
@@ -156,90 +146,47 @@ const ALL_HERMES_SKILLS: Array<{ name: string; category: string }> = [
   { name: "yuanbao", category: "yuanbao" },
 ];
 
-// ─── Health Log ──────────────────────────────────────────────────────────────
+// ─── Data API ───────────────────────────────────────────────────────────────
 
-async function logHealth() {
-  const [noteCount, skillCount, sessionCount] = await Promise.all([
-    prisma.vaultNote.count(),
-    prisma.skill.count(),
-    prisma.session.count(),
-  ]);
-
-  const totalLines = await prisma.vaultNote.aggregate({ _sum: { lines: true } });
-
-  await prisma.healthLog.create({
-    data: {
-      vaultSize: totalLines._sum.lines || 0,
-      noteCount,
-      skillCount,
-      sessionCount,
-    },
-  });
-}
-
-// ─── Main Sync Endpoint ──────────────────────────────────────────────────────
-
-export async function POST() {
-  const results = {
-    vault: { synced: 0, error: null as string | null },
-    skills: { synced: 0, bundled: 0, error: null as string | null },
-    health: { logged: false, error: null as string | null },
-  };
-
-  // 1. Vault Sync
+export async function GET() {
   try {
     const notes = await scanVault();
-    await prisma.vaultNote.deleteMany();
+    const concepts = notes.filter((n) => n.type === "concept").length;
+    const sources = notes.filter((n) => n.type === "source").length;
+    const workflows = notes.filter((n) => n.type === "workflow").length;
+    const fieldInsights = notes.filter((n) => n.type === "field-insight").length;
+    const totalLines = notes.reduce((sum, n) => sum + n.lines, 0);
+
+    const folderMap: Record<string, number> = {};
     for (const note of notes) {
-      await prisma.vaultNote.create({
-        data: {
-          title: note.title,
-          type: note.type,
-          folder: note.folder,
-          lines: note.lines,
-          words: note.words,
-          status: "developing",
-          confidence: "medium",
-          links: "[]",
-        },
-      });
+      folderMap[note.folder] = (folderMap[note.folder] || 0) + 1;
     }
-    results.vault.synced = notes.length;
-  } catch (e) {
-    results.vault.error = String(e);
-  }
 
-  // 2. Skills Sync (full Hermes catalog — always 76 skills)
-  try {
-    await prisma.skill.deleteMany();
-    for (const s of ALL_HERMES_SKILLS) {
-      await prisma.skill.create({
-        data: {
-          name: s.name,
-          category: s.category,
-          description: null,
-          isActive: true,
-          source: "bundled",
-        },
-      });
-    }
-    results.skills.synced = ALL_HERMES_SKILLS.length;
-    results.skills.bundled = ALL_HERMES_SKILLS.length;
-  } catch (e) {
-    results.skills.error = String(e);
+    return NextResponse.json({
+      vault: {
+        total: notes.length,
+        concepts,
+        sources,
+        workflows,
+        fieldInsights,
+        totalLines,
+        folders: folderMap,
+        notes: notes.map((n) => ({
+          title: n.title,
+          type: n.type,
+          folder: n.folder,
+          lines: n.lines,
+          words: n.words,
+        })),
+      },
+      skills: {
+        total: ALL_HERMES_SKILLS.length,
+        bundled: ALL_HERMES_SKILLS.length,
+        list: ALL_HERMES_SKILLS,
+      },
+      timestamp: new Date().toISOString(),
+    });
+  } catch (error) {
+    return NextResponse.json({ error: String(error) }, { status: 500 });
   }
-
-  // 3. Log Health
-  try {
-    await logHealth();
-    results.health.logged = true;
-  } catch (e) {
-    results.health.error = String(e);
-  }
-
-  return NextResponse.json({
-    success: true,
-    timestamp: new Date().toISOString(),
-    results,
-  });
 }

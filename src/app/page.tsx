@@ -1,57 +1,73 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { prisma } from "@/lib/prisma";
-import { FileText, Zap, MessageSquare, Clock, TrendingUp, RefreshCw, CheckCircle, AlertCircle, Loader2, Activity } from "lucide-react";
 import Link from "next/link";
+import { FileText, Zap, MessageSquare, Clock, TrendingUp, RefreshCw, CheckCircle, AlertCircle, Loader2, Activity } from "lucide-react";
 
-export const dynamic = "force-dynamic";
-
-interface Summary {
-  notes: number;
+interface VaultData {
+  total: number;
   concepts: number;
   sources: number;
   workflows: number;
   fieldInsights: number;
   totalLines: number;
-  skills: number;
-  sessions: number;
-  jobs: number;
-  articles: number;
+  folders: Record<string, number>;
+  notes: Array<{ title: string; type: string; folder: string; lines: number; words: number }>;
 }
 
-async function getStats(): Promise<Summary> {
-  try {
-    const [notes, skills, sessions, jobs, articles] = await Promise.all([
-      prisma.vaultNote.count(),
-      prisma.skill.count(),
-      prisma.session.count(),
-      prisma.cronJob.count(),
-      prisma.article.count(),
-    ]);
+interface ApiData {
+  vault: VaultData;
+  skills: { total: number; bundled: number; list: Array<{ name: string; category: string }> };
+  timestamp: string;
+}
 
-    const concepts = await prisma.vaultNote.count({ where: { type: "concept" } });
-    const sources = await prisma.vaultNote.count({ where: { type: "source" } });
-    const workflows = await prisma.vaultNote.count({ where: { type: "workflow" } });
-    const fieldInsights = await prisma.vaultNote.count({ where: { type: "field-insight" } });
+export default function HomePage() {
+  const [data, setData] = useState<ApiData | null>(null);
+  const [lastSync, setLastSync] = useState<Date>(new Date());
+  const [syncing, setSyncing] = useState(false);
 
-    const totalLines = await prisma.vaultNote.aggregate({ _sum: { lines: true } });
+  const fetchData = useCallback(async () => {
+    try {
+      const res = await fetch("/api/data");
+      const json = await res.json();
+      setData(json);
+      setLastSync(new Date());
+    } catch (e) {
+      console.error("Failed to fetch data:", e);
+    }
+  }, []);
 
-    return {
-      notes, concepts, sources, workflows, fieldInsights,
-      totalLines: totalLines._sum.lines || 0,
-      skills, sessions, jobs, articles,
-    };
-  } catch {
-    return {
-      notes: 0, concepts: 0, sources: 0, workflows: 0, fieldInsights: 0,
-      totalLines: 0, skills: 0, sessions: 0, jobs: 0, articles: 0,
-    };
+  useEffect(() => {
+    fetchData();
+    const interval = setInterval(fetchData, 5 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, [fetchData]);
+
+  const handleSync = async () => {
+    setSyncing(true);
+    await fetchData();
+    setSyncing(false);
+  };
+
+  const timeSince = () => {
+    const seconds = Math.floor((Date.now() - lastSync.getTime()) / 1000);
+    if (seconds < 60) return "just now";
+    if (seconds < 3600) return Math.floor(seconds / 60) + "m ago";
+    return Math.floor(seconds / 3600) + "h ago";
+  };
+
+  if (!data) {
+    return (
+      <div>
+        <h1 className="page-title">Overview</h1>
+        <div className="empty-state">
+          <Loader2 className="w-6 h-6" style={{ animation: "spin 1s linear infinite" }} />
+          <p style={{ marginTop: 12 }}>Loading Performance Brain...</p>
+        </div>
+        <style>{"@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }"}</style>
+      </div>
+    );
   }
-}
-
-export default async function HomePage() {
-  const stats = await getStats();
 
   return (
     <div>
@@ -60,30 +76,42 @@ export default async function HomePage() {
           <h1 className="page-title">Overview</h1>
           <p className="page-subtitle">Your Performance Brain at a glance</p>
         </div>
-        <SyncButton />
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 8 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+            <span style={{ fontSize: 11, color: "var(--text-muted)", display: "flex", alignItems: "center", gap: 4 }}>
+              <Activity className="w-3 h-3" style={{ color: "var(--green)" }} />
+              Updated {timeSince()}
+            </span>
+            <button onClick={handleSync} disabled={syncing} className="btn btn-primary btn-sm"
+              style={{ display: "flex", alignItems: "center", gap: 6, opacity: syncing ? 0.7 : 1 }}>
+              {syncing ? <Loader2 className="w-3 h-3" style={{ animation: "spin 1s linear infinite" }} /> : <RefreshCw className="w-3 h-3" />}
+              {syncing ? "Loading..." : "Refresh"}
+            </button>
+          </div>
+        </div>
       </div>
 
       <div className="stats-grid">
-        <StatCard icon={<FileText className="w-4 h-4" />} label="Total Notes" value={stats.notes} color="blue" />
-        <StatCard icon={<FileText className="w-4 h-4" />} label="Concepts" value={stats.concepts} color="blue" />
-        <StatCard icon={<Zap className="w-4 h-4" />} label="Skills" value={stats.skills} color="green" />
-        <StatCard icon={<MessageSquare className="w-4 h-4" />} label="Sessions" value={stats.sessions} />
-        <StatCard icon={<Clock className="w-4 h-4" />} label="Cron Jobs" value={stats.jobs} />
-        <StatCard icon={<TrendingUp className="w-4 h-4" />} label="Articles" value={stats.articles} />
+        <StatCard icon={<FileText className="w-4 h-4" />} label="Total Notes" value={data.vault.total} color="blue" />
+        <StatCard icon={<FileText className="w-4 h-4" />} label="Concepts" value={data.vault.concepts} color="blue" />
+        <StatCard icon={<Zap className="w-4 h-4" />} label="Skills" value={data.skills.total} color="green" />
+        <StatCard icon={<MessageSquare className="w-4 h-4" />} label="Sources" value={data.vault.sources} />
+        <StatCard icon={<Clock className="w-4 h-4" />} label="Workflows" value={data.vault.workflows} />
+        <StatCard icon={<TrendingUp className="w-4 h-4" />} label="Field Insights" value={data.vault.fieldInsights} />
       </div>
 
       <div className="stats-grid" style={{ gridTemplateColumns: "repeat(3, 1fr)" }}>
         <div className="stat-card">
           <div className="stat-label">Total Lines Written</div>
-          <div className="stat-value">{stats.totalLines.toLocaleString()}</div>
+          <div className="stat-value">{data.vault.totalLines.toLocaleString()}</div>
         </div>
         <div className="stat-card">
-          <div className="stat-label">Workflows</div>
-          <div className="stat-value">{stats.workflows}</div>
+          <div className="stat-label">Knowledge Folders</div>
+          <div className="stat-value">{Object.keys(data.vault.folders).length}</div>
         </div>
         <div className="stat-card">
-          <div className="stat-label">Field Insights</div>
-          <div className="stat-value">{stats.fieldInsights}</div>
+          <div className="stat-label">Status</div>
+          <div className="stat-value" style={{ color: "#10b981", fontSize: 20 }}>Online</div>
         </div>
       </div>
 
@@ -96,19 +124,19 @@ export default async function HomePage() {
             <div className="item-list">
               <li>
                 <span className="item-title">Browse all vault notes</span>
-                <Link href="/vault" style={{ fontSize: 13, color: 'var(--accent)' }}>Open →</Link>
+                <Link href="/vault" style={{ fontSize: 13, color: "var(--accent)" }}>Open →</Link>
               </li>
               <li>
                 <span className="item-title">View installed skills</span>
-                <Link href="/skills" style={{ fontSize: 13, color: 'var(--accent)' }}>Open →</Link>
+                <Link href="/skills" style={{ fontSize: 13, color: "var(--accent)" }}>Open →</Link>
               </li>
               <li>
                 <span className="item-title">System health check</span>
-                <Link href="/health" style={{ fontSize: 13, color: 'var(--accent)' }}>Open →</Link>
+                <Link href="/health" style={{ fontSize: 13, color: "var(--accent)" }}>Open →</Link>
               </li>
               <li>
                 <span className="item-title">Research articles</span>
-                <Link href="/articles" style={{ fontSize: 13, color: 'var(--accent)' }}>Open →</Link>
+                <Link href="/articles" style={{ fontSize: 13, color: "var(--accent)" }}>Open →</Link>
               </li>
             </div>
           </div>
@@ -116,106 +144,24 @@ export default async function HomePage() {
 
         <div className="card">
           <div className="card-header">
-            <span className="card-title">System Info</span>
+            <span className="card-title">Vault Folders</span>
           </div>
           <div className="card-body">
             <div className="item-list">
-              <li>
-                <span className="item-title">Vault Path</span>
-                <span className="item-meta" style={{ fontSize: 11 }}>Obsidian/Elfred Brain/</span>
-              </li>
-              <li>
-                <span className="item-title">Database</span>
-                <span className="item-meta">SQLite (local)</span>
-              </li>
-              <li>
-                <span className="item-title">Stack</span>
-                <span className="item-meta">Next.js + Prisma</span>
-              </li>
-              <li>
-                <span className="item-title">Auto-Sync</span>
-                <span className="badge green">Every 5 min</span>
-              </li>
+              {Object.entries(data.vault.folders).map(([folder, count]) => (
+                <li key={folder}>
+                  <span className="item-title">{folder}</span>
+                  <span className="item-meta">{count} notes</span>
+                </li>
+              ))}
             </div>
           </div>
         </div>
       </div>
+
+      <style>{"@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }"}</style>
     </div>
   );
-}
-
-function SyncButton() {
-  const [syncing, setSyncing] = useState(false);
-  const [result, setResult] = useState<{ success: boolean; message: string } | null>(null);
-  const [lastSync, setLastSync] = useState<Date>(new Date());
-
-  // Auto-sync every 5 minutes
-  useEffect(() => {
-    const interval = setInterval(async () => {
-      await handleSyncInternal(setSyncing, setResult, setLastSync, false);
-    }, 5 * 60 * 1000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const handleSync = async () => {
-    await handleSyncInternal(setSyncing, setResult, setLastSync, true);
-  };
-
-  const timeSince = () => {
-    const seconds = Math.floor((Date.now() - lastSync.getTime()) / 1000);
-    if (seconds < 60) return "just now";
-    if (seconds < 3600) return Math.floor(seconds / 60) + "m ago";
-    return Math.floor(seconds / 3600) + "h ago";
-  };
-
-  return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 8 }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-        <span style={{ fontSize: 11, color: "var(--text-muted)", display: "flex", alignItems: "center", gap: 4 }}>
-          <Activity className="w-3 h-3" style={{ color: "var(--green)" }} />
-          Last sync: {timeSince()}
-        </span>
-        <button onClick={handleSync} disabled={syncing} className="btn btn-primary btn-sm"
-          style={{ display: "flex", alignItems: "center", gap: 6, opacity: syncing ? 0.7 : 1, cursor: syncing ? "not-allowed" : "pointer" }}>
-          {syncing ? <Loader2 className="w-3 h-3" style={{ animation: "spin 1s linear infinite" }} /> : <RefreshCw className="w-3 h-3" />}
-          {syncing ? "Syncing..." : "Sync Now"}
-        </button>
-      </div>
-      {result && (
-        <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12,
-          color: result.success ? "var(--green)" : "var(--red)", maxWidth: 300 }}>
-          {result.success ? <CheckCircle className="w-3 h-3" /> : <AlertCircle className="w-3 h-3" />}
-          <span style={{ textAlign: "right" }}>{result.message}</span>
-        </div>
-      )}
-      <style>{`@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }`}</style>
-    </div>
-  );
-}
-
-async function handleSyncInternal(
-  setSyncing: (v: boolean) => void,
-  setResult: (r: { success: boolean; message: string } | null) => void,
-  setLastSync: (d: Date) => void,
-  showResult: boolean,
-) {
-  setSyncing(true);
-  if (showResult) setResult(null);
-  try {
-    const res = await fetch("/api/sync", { method: "POST" });
-    const data = await res.json();
-    if (data.success && showResult) {
-      setResult({
-        success: true,
-        message: `Synced: ${data.results.vault.synced} notes, ${data.results.skills.synced} skills`,
-      });
-    }
-    setLastSync(new Date());
-  } catch (e) {
-    if (showResult) setResult({ success: false, message: String(e) });
-  } finally {
-    setSyncing(false);
-  }
 }
 
 function StatCard({ icon, label, value, color = "blue" }: { icon: React.ReactNode; label: string; value: number; color?: "blue" | "green" | "amber" }) {
