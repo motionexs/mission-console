@@ -28,14 +28,17 @@ model VaultNote {
 /// Installed Hermes skills
 model Skill {
   id          String   @id @default(cuid())
-  name        String   @unique
+  name        String
   description String?
   category    String?
   isActive    Boolean  @default(true)
+  source      String   @default("active") // active | optional | plugin
   lastUsed    DateTime?
   createdAt   DateTime @default(now())
 
+  @@unique([name, source])
   @@index([category])
+  @@index([source])
 }
 
 /// Hermes conversation sessions

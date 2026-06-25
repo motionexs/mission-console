@@ -10,6 +10,8 @@ const execAsync = promisify(exec);
 const VAULT_PATH = "/Users/elfredfleischman/Documents/obsidian/Elfred Brain/Elfred Brain";
 const HERMES_HOME = path.join(process.env.HOME || "~", ".hermes");
 const SKILLS_PATH = path.join(HERMES_HOME, "skills");
+const OPTIONAL_SKILLS_PATH = path.join(HERMES_HOME, "hermes-agent/optional-skills");
+const PLUGINS_PATH = path.join(HERMES_HOME, "hermes-agent/plugins");
 
 // ─── Vault Scanner ───────────────────────────────────────────────────────────
 
@@ -70,23 +72,26 @@ async function scanVault() {
   return notes;
 }
 
-// ─── Skills Scanner ──────────────────────────────────────────────────────────
+// ─── Skills Scanner (all locations) ──────────────────────────────────────────
 
-async function scanSkills() {
-  const skills: Array<{
-    name: string;
-    description: string | null;
-    category: string | null;
-    isActive: boolean;
-  }> = [];
+interface SkillData {
+  name: string;
+  description: string | null;
+  category: string | null;
+  isActive: boolean;
+  source: "active" | "optional" | "plugin";
+}
+
+async function scanSkillsFromDir(dirPath: string, source: "active" | "optional" | "plugin"): Promise<SkillData[]> {
+  const skills: SkillData[] = [];
 
   try {
-    const entries = await fs.readdir(SKILLS_PATH, { withFileTypes: true });
+    const entries = await fs.readdir(dirPath, { withFileTypes: true });
     for (const entry of entries) {
       if (!entry.isDirectory()) continue;
       if (entry.name.startsWith(".")) continue;
 
-      const skillFile = path.join(SKILLS_PATH, entry.name, "SKILL.md");
+      const skillFile = path.join(dirPath, entry.name, "SKILL.md");
       let description: string | null = null;
       let category: string | null = null;
 
@@ -107,22 +112,32 @@ async function scanSkills() {
       skills.push({
         name: entry.name,
         description,
-        category,
-        isActive: true,
+        category: category || (source === "plugin" ? "plugin" : source),
+        isActive: source === "active",
+        source,
       });
     }
   } catch {
-    // Skills directory doesn't exist
+    // Directory doesn't exist
   }
 
   return skills;
+}
+
+async function scanAllSkills(): Promise<SkillData[]> {
+  const [active, optional, plugins] = await Promise.all([
+    scanSkillsFromDir(SKILLS_PATH, "active"),
+    scanSkillsFromDir(OPTIONAL_SKILLS_PATH, "optional"),
+    scanSkillsFromDir(PLUGINS_PATH, "plugin"),
+  ]);
+
+  return [...active, ...optional, ...plugins];
 }
 
 // ─── Session Scanner (via Hermes CLI) ────────────────────────────────────────
 
 async function scanSessions() {
   try {
-    // Try to get session info from hermes CLI
     const { stdout } = await execAsync(
       "hermes sessions list --limit 20 2>/dev/null || echo '[]'"
     );
@@ -137,7 +152,6 @@ async function scanSessions() {
       createdAt: s.created_at ? new Date(s.created_at) : new Date(),
     }));
   } catch {
-    // If hermes CLI isn't available, return empty
     return [];
   }
 }
@@ -168,11 +182,10 @@ async function scanCronJobs() {
 // ─── Health Log ──────────────────────────────────────────────────────────────
 
 async function logHealth() {
-  const [noteCount, skillCount, sessionCount, articleCount] = await Promise.all([
+  const [noteCount, skillCount, sessionCount] = await Promise.all([
     prisma.vaultNote.count(),
     prisma.skill.count(),
     prisma.session.count(),
-    prisma.article.count(),
   ]);
 
   const totalLines = await prisma.vaultNote.aggregate({ _sum: { lines: true } });
@@ -192,7 +205,7 @@ async function logHealth() {
 export async function POST() {
   const results = {
     vault: { synced: 0, error: null as string | null },
-    skills: { synced: 0, error: null as string | null },
+    skills: { synced: 0, active: 0, optional: 0, plugins: 0, error: null as string | null },
     sessions: { synced: 0, error: null as string | null },
     cron: { synced: 0, error: null as string | null },
     health: { logged: false, error: null as string | null },
@@ -221,14 +234,17 @@ export async function POST() {
     results.vault.error = String(e);
   }
 
-  // 2. Skills Sync
+  // 2. Skills Sync (all locations)
   try {
-    const skills = await scanSkills();
+    const skills = await scanAllSkills();
     await prisma.skill.deleteMany();
     for (const skill of skills) {
       await prisma.skill.create({ data: skill });
     }
     results.skills.synced = skills.length;
+    results.skills.active = skills.filter((s) => s.source === "active").length;
+    results.skills.optional = skills.filter((s) => s.source === "optional").length;
+    results.skills.plugins = skills.filter((s) => s.source === "plugin").length;
   } catch (e) {
     results.skills.error = String(e);
   }
