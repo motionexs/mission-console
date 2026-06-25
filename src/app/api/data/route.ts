@@ -2,10 +2,10 @@ import { NextResponse } from "next/server";
 import { promises as fs } from "fs";
 import path from "path";
 
-// On Vercel, vault files are in the repo (deployed from GitHub)
+// On Vercel, vault files are in the /vault directory of the repo
 // On local, use the Obsidian path
 const VAULT_PATH = process.env.VERCEL
-  ? path.join(process.cwd(), "Elfred Brain")
+  ? path.join(process.cwd(), "vault")
   : "/Users/elfredfleischman/Documents/obsidian/Elfred Brain/Elfred Brain";
 
 // ─── Vault Scanner ───────────────────────────────────────────────────────────
